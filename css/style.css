@@ -1,0 +1,82 @@
+/* Created By */
+.small{
+    font-size: 8px;
+    color: darkgray;
+    font-weight: lighter;
+    text-align: right; 
+}
+
+.small a{
+    color: gray;
+    font-weight: lighter;
+}
+
+/* Accordion */
+.social-accordion .ui-accordion-content {
+    padding: 0;
+}
+
+.social-accordion h3 a{
+    font-size: 14px;
+    font-style: normal;
+    color: #555;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
+}
+
+.social-accordion h3 a:hover{
+    text-decoration: none;
+}
+
+/* Accordion Sections */
+.social-accordion h3.twitter a:hover{
+    background-color: #69c0e6;
+}
+
+.twitter .ui-icon {
+    background-image: url(../images/twitter.png);
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion h3.facebook a:hover{
+    background-color: #0077a9;
+}
+
+.facebook .ui-icon {
+    background-image: url(../images/facebook.png);
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion h3.googleplus a:hover{
+    background-color: #d03717;
+}
+
+.googleplus .ui-icon {
+    background-image: url(../images/googleplus.png);
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion h3.linkedin a:hover{
+    background-color: #1683b1;
+}
+
+.linkedin .ui-icon {
+    background-image: url(../images/linkedin.png);
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion h3.youtube a:hover{
+    background-color: #fe3031;
+}
+
+.youtube .ui-icon {
+    background-image: url(../images/youtube.png);
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
