@@ -48,7 +48,7 @@ The width option sets the width, if possible, of the embedded social media chann
 == Changelog ==
 
 = 1.1 =
-* Update of script calls.
+* Update script calls.
 
 = 1.0 =
 * First version.
