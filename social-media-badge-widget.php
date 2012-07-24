@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 1.0
+Version: 1.1
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 License: GPL2
