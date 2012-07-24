@@ -38,12 +38,12 @@ The width option sets the width, if possible, of the embedded social media chann
 
 == Screenshots ==
 
-1. Widget front end - overview. `/tags/1.1/social-media-badge-widget.png`
-2. Widget front end - colour on hover. `/tags/1.1/social-media-badge-widget-hover.png`
-3. Widget front end - display Twitter stream. `/tags/1.1/social-media-badge-widget-twitter.png`
-4. Widget front end - display LinkedIn badge, resizing to view entire badge. `/tags/1.1/social-media-badge-widget-linkedin.png`
-5. Widget backend - details of widget. `/tags/1.1/social-media-badge-widget-details.png`
-6. Widget backend - Only need to enter usernames on each channel to embed the badge. `/tags/1.1/social-media-badge-widget-backend.png`
+1. Widget front end - overview. `/trunk/social-media-badge-widget.png`
+2. Widget front end - colour on hover. `/trunk/social-media-badge-widget-hover.png`
+3. Widget front end - display Twitter stream. `/trunk/social-media-badge-widget-twitter.png`
+4. Widget front end - display LinkedIn badge, resizing to view entire badge. `/trunk/social-media-badge-widget-linkedin.png`
+5. Widget backend - details of widget. `/trunk/social-media-badge-widget-details.png`
+6. Widget backend - Only need to enter usernames on each channel to embed the badge. `/trunk/social-media-badge-widget-backend.png`
 
 == Changelog ==
 
