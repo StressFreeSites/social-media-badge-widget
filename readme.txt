@@ -22,7 +22,7 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload `social_media_badge_widget` folder to the `/wp-content/plugins/` directory
+1. Upload `social-media-badge-widget` folder to the `/wp-content/plugins/` directory
 1. Activate the `Social Media Badge Widget` plugin through the 'Plugins' menu in WordPress
 1. Go to widgets and add the `Social Media Badge Widget` to your sidebar.
 
