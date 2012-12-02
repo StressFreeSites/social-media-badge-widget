@@ -4,7 +4,7 @@ Donate link: http://stressfreesites.co.uk/plugins
 Tags: social media, badge, widget, facebook, twitter, linked in, you tube
 Requires at least: 3.0.0
 Tested up to: 3.4
-Stable tag: 1.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,10 @@ You do not need to! The code is automatically created, all you need is the name 
 
 The width option sets the width, if possible, of the embedded social media channel information so that it appears at the correct width for you website. This should be set to the width of the widget in the sidebar.
 
+= Can social media channels be hidden? =
+
+Yes, just do not enter any information for that social media channel and that section will not show up.
+
 == Screenshots ==
 
 1. Widget front end - overview.
@@ -47,6 +51,10 @@ The width option sets the width, if possible, of the embedded social media chann
 
 == Changelog ==
 
+= 2.0 =
+* Admin page enabling general, Twitter and Facebook widget customisation.
+* Localisation.
+
 = 1.1 =
 * Update script calls.
 
@@ -55,5 +63,5 @@ The width option sets the width, if possible, of the embedded social media chann
 
 == Upgrade Notice ==
 
-= 1.1 =
-Upgrade for accordion section to work on all browsers.
+= 2.0 =
+Admin page enabling general, Twitter and Facebook widget customisation.
