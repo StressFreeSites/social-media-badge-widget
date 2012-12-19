@@ -30,6 +30,14 @@
     margin-bottom: 0px;
 }
 
+.social-accordion .ui-accordion-header a { 
+    padding-left: 2em;
+}
+
+.widget-area .widget h3 {
+    margin-bottom: 0px;
+}
+
 .social-accordion h3 a:hover{
     text-decoration: none;
     color: #555;
