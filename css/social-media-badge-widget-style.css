@@ -45,7 +45,7 @@
 
 /* Accordion Sections */
 .twitter .ui-icon {
-    background-image: url(../images/twitter.png);
+    background-image: url(../images/twitter.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
@@ -56,7 +56,7 @@
 }
 
 .facebook .ui-icon {
-    background-image: url(../images/facebook.png);
+    background-image: url(../images/facebook.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
@@ -67,7 +67,7 @@
 }
 
 .googleplus .ui-icon {
-    background-image: url(../images/googleplus.png);
+    background-image: url(../images/googleplus.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
@@ -78,7 +78,7 @@
 }
 
 .linkedin .ui-icon {
-    background-image: url(../images/linkedin.png);
+    background-image: url(../images/linkedin.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
@@ -89,7 +89,7 @@
 }
 
 .youtube .ui-icon {
-    background-image: url(../images/youtube.png);
+    background-image: url(../images/youtube.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
