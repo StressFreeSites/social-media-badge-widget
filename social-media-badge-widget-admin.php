@@ -64,8 +64,17 @@ if(isset($_POST['submit'])){
     else{
         $facesFacebook = 'false';
     }
-    update_option('smbw_faces_facebook', $facesFacebook);     
+    update_option('smbw_faces_facebook', $facesFacebook);  
     
+    $loadJqueryUI = $_POST['smbw_load_jquery_ui'];
+    update_option('smbw_load_jquery_ui', $loadJqueryUI);
+    
+    $style = $_POST['smbw_style'];
+    update_option('smbw_style', $style); 
+    
+    $loadScripts = $_POST['smbw_load_scripts'];
+    update_option('smbw_load_scripts', $loadScripts);
+
     ?>
     <div class="updated"><p><strong><?php _e('Options saved.', 'smbw-language');?></strong></p></div>
     <?php
@@ -79,7 +88,14 @@ else{
     $liveTwitter = get_option('smbw_live_twitter','false'); 
     
     $streamFacebook = get_option('smbw_stream_facebook','true');   
-    $facesFacebook = get_option('smbw_faces_facebook','false');   
+    $facesFacebook = get_option('smbw_faces_facebook','false'); 
+    
+    $loadJqueryUI = get_option('smbw_load_jquery_ui','true');
+    $style = get_option('smbw_style','Grey');
+    
+    $loadScripts = get_option('smbw_load_scripts', array('jQuery' => 1, 
+                                                         'jQuery-ui-core' => 1,
+                                                         'jQuery-ui-accordion' => 1));
 }
 ?>
 <div class="wrap">
@@ -187,12 +203,68 @@ else{
             </tr>       
          </tbody>
         </table>
-
+        
+        <hr/>
+        <?php echo '<h3 class="smbw-admin-title">' . __('Style Settings', 'smbw-language') . '</h3>'; ?>
+        <table class="form-table">
+          <tbody>
+            <tr valign="top">
+              <th scope="row">
+                  <?php _e('Load jQuery UI styling', 'smbw-language'); ?>
+              </th>
+              <td>
+                  <input class="checkbox" type="checkbox" id="smbw_load_jquery_ui" name="smbw_load_jquery_ui" <?php checked($loadJqueryUI, 'true'); ?> value="true" />
+                  <label for="smbw_load_jquery_ui"><?php _e('If another plugin or your theme already has jQuery UI loaded (incorrectly) then untick this to stop the plugin\'s styling overriding and interferaring. NOTE: this will make the selection below redundant', 'smbw-language'); ?></label><br />           
+              </td>               
+            </tr>
+            <tr valign="top">
+              <th scope="row">
+                <label for="smbw_style"><?php _e('Widget Style','smbw-language'); ?></label>
+              </th>
+              <td>
+                <select name="smbw_style"> 
+                    <option <?php if($style == 'Grey') echo ('SELECTED');?>>Grey</option>
+                    <option <?php if($style == 'Black') echo ('SELECTED');?>>Black</option>
+                    <option <?php if($style == 'Blue') echo ('SELECTED');?>>Blue</option>          
+                 </select><p class="description"><?php _e('Change the widget style to match your website', 'smbw-language'); ?></p>
+               </td>               
+            </tr>       
+         </tbody>
+        </table>
+        
+        <hr/>
+        <?php echo '<h3 class="smbw-admin-title">' . __('System Settings', 'smbw-language') . '</h3>'; ?>
+        <table class="form-table">
+          <tbody>
+            <tr valign="top">
+              <th scope="row">
+                  <?php _e('Load jQuery and jQuery UI scripts', 'smbw-language'); ?>
+              </th>
+              <td>                  
+                  <input type="checkbox" name="smbw_load_scripts[jQuery]" value="1" <?php checked( 1 == $loadScripts['jQuery'] ); ?> />
+                  <label for="smbw_load_scripts[jQuery]">jQuery</label><br/>
+                  <input type="checkbox" name="smbw_load_scripts[jQuery-ui-core]" value="1" <?php checked( 1 == $loadScripts['jQuery-ui-core'] ); ?> />
+                  <label for="smbw_load_scripts[jQuery-ui-core]">jQuery-UI-Core</label><br/>
+                  <input type="checkbox" name="smbw_load_scripts[jQuery-ui-accordion]" value="1" <?php checked( 1 == $loadScripts['jQuery-ui-accordion'] ); ?> />
+                  <label for="smbw_load_scripts[jQuery-ui-accordion]">jQuery-UI-Accordion</label><br/>
+                  <p class="description"><?php _e('If another plugin or your theme already has jQuery, jQuery UI or jQuery UI Accordion loaded (incorrectly) then untick the corresponding script to stop the plugin\'s loading it twice causing it not to work.', 'smbw-language'); ?></p>           
+              </td>               
+            </tr>
+      
+         </tbody>
+        </table>
+        
         <hr/>       
         <p class="submit">
-            <input type="submit" name="submit" value="<?php _e('Update Options', 'smbw-language') ?>" />
+            <input type="submit" name="submit" class="button-primary" value="<?php _e('Update Options', 'smbw-language') ?>" />
         </p>
     </form>
-    <?php
+    <?php 
+    echo '<h3>' . __('Troubleshooting', 'smbw-language') . '</h3>'; 
+    echo '<h4>' . __('If the widget does not display correctly' , 'smbw-language') . '</h4>';
+    echo '<p class="description">' . __('If this happen it means that you have a theme or plugin which loads jQuery or jQuery UI incorrectly. To resolve this untick the options jQuery, jQuery UI and jQuery UI Accordion. See if that makes the widget display correctly. If it doesn\'t try ticking jQuery UI Accordion, then checking, then ticking jQuery UI and so on.' , 'smbw-language') . '</p>';           
+    echo '<h4>' . __('If the widget interferes with the styling of other areas of your website', 'smbw-language') . '</h4>';
+    echo '<p class="description">' . __('If this happens you do not need the default styling of the widet. To resolve this untick the styling option load jQuery UI styling.' , 'smbw-language') . '</p>';           
+        
 
 ?>

@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.1
+Version: 2.2
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 License: GPL2
@@ -33,14 +33,82 @@ add_action('plugins_loaded', 'smbw_init');
 
 function smbw_enqueue_scripts() { 
     /* Load custom scripts */
-    wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-core','jquery-ui-accordion'),'1.0',true); 
+    
+    /* Select which scripts to load */
+    $loadScripts = get_option('smbw_load_scripts', array('jQuery' => 1, 
+                                                     'jQuery-ui-core' => 1,
+                                                     'jQuery-ui-accordion' => 1));
+
+    if(isset($loadScripts['jQuery'])){
+        if(isset($loadScripts['jQuery-ui-core'])){
+            if(isset($loadScripts['jQuery-ui-accordion'])){
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-core','jquery-ui-accordion'),'1.0',true);
+            }
+            else{
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-core'),'1.0',true);
+            }
+        }
+        else{
+            if(isset($loadScripts['jQuery-ui-accordion'])){
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-accordion'),'1.0',true);          
+            }
+            else{
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery'),'1.0',true);
+            }
+        }
+    }
+    else{
+        if(isset($loadScripts['jQuery-ui-core'])){
+            if(isset($loadScripts['jQuery-ui-accordion'])){
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-core','jquery-ui-accordion'),'1.0',true);
+            }
+            else{
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-core'),'1.0',true);
+            }
+        }
+        else{
+            if(isset($loadScripts['jQuery-ui-accordion'])){
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-accordion'),'1.0',true);
+            }
+            else{
+                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array(),'1.0',true);
+            }           
+        }     
+    }
+
+    //pass plugin URL variable into Javascript
+    wp_localize_script('social-media-badge-widget-jquery-load', 'website_information', array( 'plugin_url' => plugins_url() ));
+
 }    
 add_action('wp_enqueue_scripts', 'smbw_enqueue_scripts');
 
 function smbw_enqueue_styles() { 
     /* Load custom styling */
-    wp_enqueue_style('jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui.css')); 
-    wp_enqueue_style('social-media-badge-widget-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style.css'), array('jquery-ui-style')); 
+    
+    /* Load selected style */
+    $loadJqueryUI = get_option('smbw_load_jquery_ui','true');
+    if($loadJqueryUI){
+        $style = get_option('smbw_style','Grey');
+        switch($style){
+            case 'Grey':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui.css')); 
+                break;
+            case 'Black':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui-black.css'));
+                break;
+            case 'Blue':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui-blue.css'));
+                break;
+            default:
+                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui.css')); 
+                break;
+        }
+        wp_enqueue_style('social-media-badge-widget-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style.css'), array('social-media-badge-widget-jquery-ui-style'));
+    }
+    else{
+        wp_enqueue_style('social-media-badge-widget-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style.css'), array());
+    }
+     
 } 
 add_action('wp_print_styles', 'smbw_enqueue_styles');
 
