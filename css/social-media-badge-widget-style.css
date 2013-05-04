@@ -18,7 +18,7 @@
 }
 
 .social-accordion .ui-accordion-content {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .social-accordion h3 a{
@@ -31,16 +31,33 @@
 }
 
 .social-accordion .ui-accordion-header a { 
-    padding-left: 2em;
+    position: absolute;
+    left: 2.25em;
+    top: .75em;
+    vertical-align: middle;
 }
 
 .social-accordion h3.ui-accordion-header {
     margin-bottom: 0px;
 }
 
+.social-accordion h3{
+    position: relative;
+    height: 2.5em;
+}
+
 .social-accordion h3 a:hover{
     text-decoration: none;
     color: #555;
+}
+
+.social-accordion span{
+    position: absolute;
+    left: .5em;
+    top: .75em;
+    margin-top: 0px;
+    height: 16px;
+    width: 16px;
 }
 
 /* Accordion Sections */
@@ -74,7 +91,7 @@
 
 .social-accordion .ui-state-hover.googleplus,
 .social-accordion .ui-state-active.googleplus{
-    background: #d03717 !important;
+    background: #e04727 !important;
 }
 
 .linkedin .ui-icon {
@@ -97,4 +114,26 @@
 .social-accordion .ui-state-hover.youtube,
 .social-accordion .ui-state-active.youtube{
     background: #fe3031 !important;
+}
+
+.pinterest .ui-icon {
+    background-image: url(../images/pinterest.png) !important;
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion .ui-state-hover.pinterest,
+.social-accordion .ui-state-active.pinterst{
+    background: #db3037 !important;
+}
+
+.flickr .ui-icon {
+    background-image: url(../images/flickr.png) !important;
+    background-position: 0;
+    background-size: 16px 16px;
+}
+
+.social-accordion .ui-state-hover.flickr,
+.social-accordion .ui-state-active.flickr{
+    background: #fb4aa6 !important;
 }

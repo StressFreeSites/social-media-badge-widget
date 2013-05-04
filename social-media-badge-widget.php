@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.2
+Version: 2.3
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 License: GPL2
@@ -12,7 +12,7 @@ License: GPL2
 /*  Copyright 2012 StressFree Sites  (info@stressfreesites.co.uk : alex@stressfreesites.co.uk)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 3, as 
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -166,6 +166,9 @@ class Social_Media_Badge_Widget extends WP_Widget {
             $googleplus = $instance['googleplus'];
             $linkedin = $instance['linkedin'];
             $youtube = $instance['youtube'];
+//            $pinterest = $instance['pinterest'];
+            $flickr = $instance['flickr'];
+            
             $createdby = isset($instance['createdby']) ? $instance['createdby'] : false;
 
             /* Before widget (defined by themes). */
@@ -176,14 +179,17 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo $before_title . $title . $after_title;
             
             /* Accordion creation */
-            echo ('<input type="hidden" id="smbw_collapsible" value="' . get_option('smbw_collapsible') . '">
-                   <input type="hidden" id="smbw_allClosed" value="' . get_option('smbw_allClosed') . '">
-                   <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '">    
+            echo ('<input type="hidden" id="smbw_collapsible" value="' . get_option('smbw_collapsible') . '" />
+                   <input type="hidden" id="smbw_allClosed" value="' . get_option('smbw_allClosed') . '" />
+                   <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '" />    
                     <div class="social-accordion">');
 
             /* Displays each Accordion tab in turn */
             if ($twitter){
                     echo ('<h3 class="twitter"><a href="#">'. __('Twitter', 'smbw-language') . '</a></h3><div>');
+//                    echo('<a class="twitter-timeline" href="https://twitter.com/'.$twitter.'" width="'.($width-2).'" height="400" data-widget-id="330734644460916739">Tweets by @'.$twitter.'</a>
+//                          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+//                         ');
                     echo ('<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
                            <script>
                             new TWTR.Widget({
@@ -265,6 +271,48 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>');
             }
             
+//            if ($pinterest){
+//                    echo ('<h3 class="pinterest"><a href="#">' . __('Pinterest', 'smbw-language') . '</a></h3><div>');
+//                    echo ('<a data-pin-do="embedUser" href="http://pinterest.com/' . $pinterest . '" data-pin-scale-width="60" data-pin-scale-height="200" data-pin-board-width="' . $width . '"></a>');
+//                    echo ('<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>');
+////                    echo ('<script type="text/javascript">
+////                            (function (w, d, load) {
+////                             var script, 
+////                             first = d.getElementsByTagName("SCRIPT")[0],  
+////                             n = load.length, 
+////                             i = 0,
+////                             go = function () {
+////                               for (i = 0; i < n; i = i + 1) {
+////                                 script = d.createElement("SCRIPT");
+////                                 script.type = "text/javascript";
+////                                 script.async = true;
+////                                 script.src = load[i];
+////                                 first.parentNode.insertBefore(script, first);
+////                               }
+////                             }
+////                             if (w.attachEvent) {
+////                               w.attachEvent("onload", go);
+////                             } else {
+////                               w.addEventListener("load", go, false);
+////                             }
+////                            }(window, document, 
+////                             ["//assets.pinterest.com/js/pinit.js"]
+////                            ));    
+////                          </script>');
+//                    echo ('</div>');                    
+//            }
+            
+            if ($flickr){
+                    echo ('<h3 class="flickr"><a href="#">' . __('Flickr', 'smbw-language') . '</a></h3><div>');
+                    echo ('<style type="text/css"> 
+                            .flickr_badge_image {margin:0px;display:inline;}
+                            .flickr_badge_image img {border: 0px solid #666666 !important; padding:1px; margin:2px;}
+                            #flickr_badge_wrapper {width:'.$width.';text-align:left}
+                           </style>');
+                    echo ('<div id="flickr_badge_wrapper"><script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=9&display=latest&size=s&layout=x&source=user&user='. $flickr .'"></script></div>');
+                    echo ('</div>');                    
+            }
+            
             /* Finih the Accordion */
             echo ('</div><!-- Social Accordion -->');
             
@@ -275,7 +323,6 @@ class Social_Media_Badge_Widget extends WP_Widget {
             
             /* After widget (defined by themes). */
             echo $after_widget;
-           
     }
 
     /* Updating the Wordpress backend */
@@ -290,6 +337,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
             $instance['googleplus'] = strip_tags($new_instance['googleplus']);
             $instance['linkedin'] = strip_tags($new_instance['linkedin']);
             $instance['youtube'] = strip_tags($new_instance['youtube']);
+//            $instance['pinterest'] = strip_tags($new_instance['pinterest']);
+            $instance['flickr'] = strip_tags($new_instance['flickr']);
             $instance['createdby'] = $new_instance['createdby'];
             return $instance;
     }
@@ -297,7 +346,7 @@ class Social_Media_Badge_Widget extends WP_Widget {
     /* Form for the Wordpress backend */
     function form($instance) {
             /* Set up some default widget settings. */
-            $defaults = array('title' => 'Stay Connected', 'width' => '190', 'twitter' => '', 'facebook' => '', 'googleplus' => '', 'linkedin' => '', 'youtube' => '', 'createdby' => 'off');
+            $defaults = array('title' => 'Stay Connected', 'width' => '190', 'twitter' => '', 'facebook' => '', 'googleplus' => '', 'linkedin' => '', 'youtube' => '', 'pinterest' => '', 'createdby' => 'off');
             
             /* Creation of the form */
             $instance = wp_parse_args((array) $instance, $defaults); ?>
@@ -314,7 +363,7 @@ class Social_Media_Badge_Widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id('twitter'); ?>" name="<?php echo $this->get_field_name('twitter'); ?>" value="<?php echo $instance['twitter']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php _e('Facebook Business Page (name as it appears in URL)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php _e('Facebook Business Page (as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
 			<input id="<?php echo $this->get_field_id('facebook'); ?>" name="<?php echo $this->get_field_name('facebook'); ?>" value="<?php echo $instance['facebook']; ?>" style="width:90%;" />
 		</p>
                 <p>
@@ -326,9 +375,17 @@ class Social_Media_Badge_Widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id('linkedin'); ?>" name="<?php echo $this->get_field_name('linkedin'); ?>" value="<?php echo $instance['linkedin']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('youtube'); ?>"><?php _e('You Tube Channel (name as it appears in URL)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('youtube'); ?>"><?php _e('You Tube Channel (as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
 			<input id="<?php echo $this->get_field_id('youtube'); ?>" name="<?php echo $this->get_field_name('youtube'); ?>" value="<?php echo $instance['youtube']; ?>" style="width:90%;" />
 		</p>
+                <!--<p>
+			<label for="<?php //echo $this->get_field_id('pinterest'); ?>"><?php //_e('Pinterest (name as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
+			<input id="<?php //echo $this->get_field_id('pinterest'); ?>" name="<?php //echo $this->get_field_name('pinterest'); ?>" value="<?php //echo $instance['pinterest']; ?>" style="width:90%;" />
+		</p>-->
+                <p>
+			<label for="<?php echo $this->get_field_id('flickr'); ?>"><?php _e('flickr (insert user ID)', 'smbw-language'); ?>:</label>
+			<input id="<?php echo $this->get_field_id('flickr'); ?>" name="<?php echo $this->get_field_name('flickr'); ?>" value="<?php echo $instance['flickr']; ?>" style="width:90%;" />
+		</p>                
                 <p>
 			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('createdby'); ?>" name="<?php echo $this->get_field_name('createdby'); ?>" <?php checked($instance['createdby'], 'on'); ?>/>
 			<label for="<?php echo $this->get_field_id('createdby'); ?>"><?php _e('Display created by? Please only remove this after making a', 'smbw-language'); ?> <a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget" target="_blank"><?php _e('donation', 'smbw-language'); ?></a><?php _e('so we can continue making plugins like these.', 'smbw-language'); ?></label>
