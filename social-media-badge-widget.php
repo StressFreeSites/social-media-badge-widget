@@ -350,15 +350,15 @@ class Social_Media_Badge_Widget extends WP_Widget {
             }
             
             /* Finish the Accordion */
-            echo ('</div><!-- Social Accordion -->');
+            echo ('</div><!-- .social-accordion -->');
             
             /* Copyright */
             if ($createdby){
                     echo ('<div class="small"><p>' . __('Plugin created by', 'smbw-language') . ' <a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget" target="_blank">StressFree Sites</a></p></div>');
             }
             
-            /* After widget (defined by themes). */
-            echo $after_widget;
+                        /* After widget (defined by themes). */
+            echo '</div><!-- .social-media-widget -->'.$after_widget;
     }
 
     /* Updating the Wordpress backend */
