@@ -1,7 +1,9 @@
 var defaultBackground;
 
 jQuery('document').ready(function($) {
+    
     var collapsibleVar = $('#smbw_collapsible').val();  
+    
     if(collapsibleVar == "true"){
         collapsibleVar = true;     
     }else{ 
@@ -36,10 +38,11 @@ jQuery('document').ready(function($) {
             $('.social-accordion .ui-state-default.flickr').css('background', '#fb4aa6');
             $('.social-accordion .ui-state-default.flickr').not('.ui-state-active').css('background', defaultBackground);
     });
+    
+    defaultBackground = $('.social-accordion .ui-state-default').not('.ui-state-active').css('background-color');
+
+    $('.social-accordion .ui-state-default').css('background', defaultBackground);
 });
 
 jQuery(window).load(function () {
-    defaultBackground = jQuery('.social-accordion .ui-state-default').not('.ui-state-active').css('background-color');
-
-    jQuery('.social-accordion .ui-state-default').css('background', defaultBackground);
 });

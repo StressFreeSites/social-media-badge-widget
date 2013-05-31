@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.3
+Version: 2.4
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 License: GPL2
@@ -135,6 +135,28 @@ function smbw_admin_styles() {
    wp_enqueue_style('social-media-badge-widget-style-admin');
 }
    
+/* Message box */
+function smbw_theme_admin_notice() {
+	global $current_user ;
+        $user_id = $current_user->ID;
+        /* Check that the user hasn't already clicked to ignore the message */
+	if ( ! get_user_meta($user_id, 'smbw_theme_ignore_notice') ) {
+            echo '<div class="updated"><p>'; 
+            printf(__('<p>Thank you for downloading Social Media Badge Widget. We hope you enjoy using the plugin, maybe some of our <a href="http://stressfreesites.co.uk/development" target="_blank">other plugins</a> would be of interest to you.</p><p>We have just launched a new Wordpress theme which might be of interest - <a href="http://greatestwordpresstheme.com" target="_blank">take a look</a>.</p><a href="%1$s">Hide This Notice</a>'), '?smbw_theme_nag_ignore=0');
+            echo "</p></div>";
+	}
+}
+add_action('admin_notices', 'smbw_theme_admin_notice');
+
+function smbw_theme_nag_ignore() {
+	global $current_user;
+        $user_id = $current_user->ID;
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET['smbw_theme_nag_ignore']) && '0' == $_GET['smbw_theme_nag_ignore'] ) {
+             add_user_meta($user_id, 'smbw_theme_ignore_notice', 'true', true);
+	}
+}
+add_action('admin_init', 'smbw_theme_nag_ignore');
 
 //function smbw_datadisplay($count = 1){
 //    $smbwdb = new wpdb(get_option('smbw_dbuser'));
@@ -162,17 +184,20 @@ class Social_Media_Badge_Widget extends WP_Widget {
             $title = apply_filters('widget_title', $instance['title']);
             $width = $instance['width'];
             $twitter = $instance['twitter'];
+            $twitter_widget_id = $instance['twitter_widget_id'];
             $facebook = $instance['facebook'];
+            $facebook_badge = $instance['facebook_badge'];
             $googleplus = $instance['googleplus'];
             $linkedin = $instance['linkedin'];
+            $linkedin_profile = $instance['linkedin_profile'];            
             $youtube = $instance['youtube'];
-//            $pinterest = $instance['pinterest'];
+            $pinterest = $instance['pinterest'];
             $flickr = $instance['flickr'];
             
             $createdby = isset($instance['createdby']) ? $instance['createdby'] : false;
-
+            
             /* Before widget (defined by themes). */
-            echo $before_widget;
+            echo $before_widget .'<div class="social-media-badge">';
             
             /* Title of widget (before and after defined by themes). */
             if ($title)
@@ -182,83 +207,93 @@ class Social_Media_Badge_Widget extends WP_Widget {
             echo ('<input type="hidden" id="smbw_collapsible" value="' . get_option('smbw_collapsible') . '" />
                    <input type="hidden" id="smbw_allClosed" value="' . get_option('smbw_allClosed') . '" />
                    <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '" />    
-                    <div class="social-accordion">');
+                   <div class="social-accordion">');
 
             /* Displays each Accordion tab in turn */
             if ($twitter){
                     echo ('<h3 class="twitter"><a href="#">'. __('Twitter', 'smbw-language') . '</a></h3><div>');
-//                    echo('<a class="twitter-timeline" href="https://twitter.com/'.$twitter.'" width="'.($width-2).'" height="400" data-widget-id="330734644460916739">Tweets by @'.$twitter.'</a>
-//                          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-//                         ');
-                    echo ('<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-                           <script>
-                            new TWTR.Widget({
-                            version: 2,
-                            type: "profile",
-                            rpp: ' . get_option('smbw_tweets', '5') . ',
-                            interval: 30000,
-                            width: '.($width-2).',
-                            height: 300,
-                            theme: {
-                                shell: {
-                                background: "#69c0e6",
-                                color: "#ffffff"
+                    if($twitter_widget_id){
+                        echo('<a class="twitter-timeline" href="https://twitter.com/'.$twitter.'" data-widget-id="'.$twitter_widget_id.'">Tweets by @'.$twitter.'</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                            ');                        
+                    }
+                    else{
+                        echo ('<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+                               <script>
+                                new TWTR.Widget({
+                                version: 2,
+                                type: "profile",
+                                rpp: ' . get_option('smbw_tweets', '5') . ',
+                                interval: 30000,
+                                width: '.($width-2).',
+                                height: 300,
+                                theme: {
+                                    shell: {
+                                    background: "#69c0e6",
+                                    color: "#ffffff"
+                                    },
+                                    tweets: {
+                                    background: "#ffffff",
+                                    color: "#333333",
+                                    links: "#009ACD"
+                                    }
                                 },
-                                tweets: {
-                                background: "#ffffff",
-                                color: "#333333",
-                                links: "#009ACD"
+                                features: {
+                                    scrollbar: false,
+                                    loop: false,
+                                    live: ' . get_option('smbw_live_twitter', 'false') . ',
+                                    behavior: "all"
                                 }
-                            },
-                            features: {
-                                scrollbar: false,
-                                loop: false,
-                                live: ' . get_option('smbw_live_twitter', 'false') . ',
-                                behavior: "all"
-                            }
-                            }).render().setUser("'.$twitter.'").start();
-                           </script>');
+                                }).render().setUser("'.$twitter.'").start();
+                               </script>');      
+                    }
                     echo ('</div>');
             }
 
-            if ($facebook){
-                    $stream_facebook = get_option('smbw_stream_facebook', 'true');
-                    $faces_facebook = get_option('smbw_faces_facebook', 'false');
-                    //adjust the height accordly depending on which options are selected.
-                    if($stream_facebook == 'true' && $faces_facebook == 'true'){
-                        $height = '675';
-                        $frame_height = '685';
-                    }
-                    else if($stream_facebook == 'true' || $faces_facebook == 'true'){
-                        $height = '475';
-                        $frame_height = '485';
-                    }
-                    else{
-                        $height = '160';
-                        $frame_height = '170';
-                    }                    
+            if ($facebook || $facebook_badge){
                     echo ('<h3 class="facebook"><a href="#">' . __('Facebook', 'smbw-language') . '</a></h3><div>');
-                    echo ('<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2F'.$facebook.'&width='.$width.'&height=' . $height . '&colorscheme=light&show_faces=' . $faces_facebook . '&border_color&stream=' . $stream_facebook . '&header=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:' . $frame_height . 'px;" allowTransparency="true"></iframe>');
+                    if($facebook){
+                        $stream_facebook = get_option('smbw_stream_facebook', 'true');
+                        $faces_facebook = get_option('smbw_faces_facebook', 'false');
+                        //adjust the height accordly depending on which options are selected.
+                        if($stream_facebook == 'true' && $faces_facebook == 'true'){
+                            $height = '675';
+                            $frame_height = '685';
+                        }
+                        else if($stream_facebook == 'true' || $faces_facebook == 'true'){
+                            $height = '475';
+                            $frame_height = '485';
+                        }
+                        else{
+                            $height = '160';
+                            $frame_height = '170';
+                        }
+                        echo ('<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2F'.$facebook.'&width='.$width.'&height=' . $height . '&colorscheme=light&show_faces=' . $faces_facebook . '&border_color&stream=' . $stream_facebook . '&header=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:' . $frame_height . 'px;" allowTransparency="true"></iframe>');
+                       
+                    }
+                    if($facebook_badge){
+                        echo $facebook_badge;
+                    }
                     echo ('</div>');
             }
             
             if ($googleplus){
                     echo ('<h3 class="googleplus"><a href="#">' . __('Google+', 'smbw-language') . '</a></h3><div style="overflow:visible;"><div style="width:300px">');
-                    echo ('<div class="g-plus" data-href="//plus.google.com/'.$googleplus.'?rel=publisher"></div>
-                           <script type="text/javascript">
-                            (function() {
-                                var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;
-                                po.src = "https://apis.google.com/js/plusone.js";
-                                var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
-                            })();
-                           </script>');
+                    echo ('<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                            <g:plus href="https://plus.google.com/'.$googleplus.'"></g:plus>');
                     echo ('</div></div>');
             }
             
-            if ($linkedin){
+            if ($linkedin || $linkedin_profile){
                     echo ('<h3 class="linkedin"><a href="#">' . __('LinkedIn', 'smbw-language') . '</a></h3><div style="overflow:visible;"><div style="width:364px">');
-                    echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+                    if ($linkedin){
+                        echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
                             <script type="IN/CompanyProfile" data-id="'.$linkedin.'" data-format="inline"></script>');
+                    }
+                    if($linkedin_profile){
+                        echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+                                <script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/'.$linkedin_profile.'" data-format="inline"></script>');
+                    }
                     echo ('</div></div>');
             }
                         
@@ -271,10 +306,11 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>');
             }
             
-//            if ($pinterest){
-//                    echo ('<h3 class="pinterest"><a href="#">' . __('Pinterest', 'smbw-language') . '</a></h3><div>');
-//                    echo ('<a data-pin-do="embedUser" href="http://pinterest.com/' . $pinterest . '" data-pin-scale-width="60" data-pin-scale-height="200" data-pin-board-width="' . $width . '"></a>');
-//                    echo ('<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>');
+            if ($pinterest){
+                    echo ('<h3 class="pinterest"><a href="#">' . __('Pinterest', 'smbw-language') . '</a></h3><div>');
+                    $pinterest_width = $width - 20;
+                    echo ('<a data-pin-do="embedUser" href="http://pinterest.com/' . $pinterest . '" data-pin-board-width="' . $pinterest_width . '"></a>');
+                    echo ('<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>');
 ////                    echo ('<script type="text/javascript">
 ////                            (function (w, d, load) {
 ////                             var script, 
@@ -299,8 +335,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
 ////                             ["//assets.pinterest.com/js/pinit.js"]
 ////                            ));    
 ////                          </script>');
-//                    echo ('</div>');                    
-//            }
+                    echo ('</div>');                    
+            }
             
             if ($flickr){
                     echo ('<h3 class="flickr"><a href="#">' . __('Flickr', 'smbw-language') . '</a></h3><div>');
@@ -313,7 +349,7 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>');                    
             }
             
-            /* Finih the Accordion */
+            /* Finish the Accordion */
             echo ('</div><!-- Social Accordion -->');
             
             /* Copyright */
@@ -330,15 +366,18 @@ class Social_Media_Badge_Widget extends WP_Widget {
             $instance = $old_instance;
 
             /* Strip tags (if needed) and update the widget settings. */
-            $instance['title'] = strip_tags($new_instance['title']);
-            $instance['width'] = strip_tags($new_instance['width']);
-            $instance['twitter'] = strip_tags($new_instance['twitter']);
-            $instance['facebook'] = strip_tags($new_instance['facebook']);
-            $instance['googleplus'] = strip_tags($new_instance['googleplus']);
-            $instance['linkedin'] = strip_tags($new_instance['linkedin']);
-            $instance['youtube'] = strip_tags($new_instance['youtube']);
-//            $instance['pinterest'] = strip_tags($new_instance['pinterest']);
-            $instance['flickr'] = strip_tags($new_instance['flickr']);
+            $instance['title'] = sanitize_text_field($new_instance['title']);
+            $instance['width'] = sanitize_text_field($new_instance['width']);
+            $instance['twitter'] = sanitize_text_field($new_instance['twitter']);
+            $instance['twitter_widget_id'] = sanitize_text_field($new_instance['twitter_widget_id']);
+            $instance['facebook'] = sanitize_text_field($new_instance['facebook']);
+            $instance['facebook_badge'] = $new_instance['facebook_badge'];
+            $instance['googleplus'] = sanitize_text_field($new_instance['googleplus']);
+            $instance['linkedin'] = sanitize_text_field($new_instance['linkedin']);
+            $instance['linkedin_profile'] = sanitize_text_field($new_instance['linkedin_profile']);            
+            $instance['youtube'] = sanitize_text_field($new_instance['youtube']);
+            $instance['pinterest'] = strip_tags($new_instance['pinterest']);
+            $instance['flickr'] = sanitize_text_field($new_instance['flickr']);
             $instance['createdby'] = $new_instance['createdby'];
             return $instance;
     }
@@ -351,39 +390,51 @@ class Social_Media_Badge_Widget extends WP_Widget {
             /* Creation of the form */
             $instance = wp_parse_args((array) $instance, $defaults); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width of Widget', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width of Widget', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" value="<?php echo $instance['width']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('twitter'); ?>"><?php _e('Twitter Username (with no \'@\' sign)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('twitter'); ?>"><?php _e('Twitter Username (with no \'@\' sign)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('twitter'); ?>" name="<?php echo $this->get_field_name('twitter'); ?>" value="<?php echo $instance['twitter']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php _e('Facebook Business Page (as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('twitter_widget_id'); ?>"><?php _e('Twitter Widget ID - OPTIONAL (for new Twitter widget, add the widget ID found in the code after ', 'smbw-language'); ?><a href="http://twitter.com/settings/widgets/" target=_blank"><?php _e('creating the widget.', 'smbw-language'); ?></a></label>
+			<input id="<?php echo $this->get_field_id('twitter_widget_id'); ?>" name="<?php echo $this->get_field_name('twitter_widget_id'); ?>" value="<?php echo $instance['twitter_widget_id']; ?>" style="width:90%;" />
+		</p>                
+                <p>
+			<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php _e('Facebook Page (insert URL after .com/)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('facebook'); ?>" name="<?php echo $this->get_field_name('facebook'); ?>" value="<?php echo $instance['facebook']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('googleplus'); ?>"><?php _e('Google+ Business Page (insert company ID', 'smbw-language'); ?>, <a href="https://developers.google.com/+/plugins/badge/" target="_blank"><?php _e('get ID here', 'smbw-language'); ?></a>):</label>
+			<label for="<?php echo $this->get_field_id('facebook_badge'); ?>"><?php _e('Facebook Badge (Create a badge ', 'smbw-language');?><a href="http://facebook.com/badges" target="_blank"><?php _e('here', 'smbw-language'); ?></a><?php _e(' then press other to see code. Finally, copy code into box below.)', 'smbw-language'); ?></label>
+			<input id="<?php echo $this->get_field_id('facebook_badge'); ?>" name="<?php echo $this->get_field_name('facebook_badge'); ?>" value="<?php esc_html_e($instance['facebook_badge']); ?>" style="width:90%;" />
+		</p>
+                <p>
+			<label for="<?php echo $this->get_field_id('googleplus'); ?>"><?php _e('Google+ (insert ID for page or profile, this is the number in the URL when viewing your Google+ page or profile)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('googleplus'); ?>" name="<?php echo $this->get_field_name('googleplus'); ?>" value="<?php echo $instance['googleplus']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('linkedin'); ?>"><?php _e('LinkedIn Company (insert company ID', 'smbw-language'); ?>, <a href="https://developer.linkedin.com/company-id-lookup" target="_blank"><?php _e('find out here', 'smbw-language'); ?></a>):</label>
+			<label for="<?php echo $this->get_field_id('linkedin'); ?>"><?php _e('LinkedIn Company (insert company ID, ', 'smbw-language'); ?> <a href="https://developer.linkedin.com/plugins/company-profile-plugin" target="_blank"><?php _e('get ID here ', 'smbw-language'); ?></a><?php _e(' by typing in your company name then press get code and find the ID in the code.)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('linkedin'); ?>" name="<?php echo $this->get_field_name('linkedin'); ?>" value="<?php echo $instance['linkedin']; ?>" style="width:90%;" />
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('youtube'); ?>"><?php _e('You Tube Channel (as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('linkedin_profile'); ?>"><?php _e('LinkedIn Profile (insert public profile URL after the .com/in/)', 'smbw-language'); ?></label>
+			<input id="<?php echo $this->get_field_id('linkedin_profile'); ?>" name="<?php echo $this->get_field_name('linkedin_profile'); ?>" value="<?php echo $instance['linkedin_profile']; ?>" style="width:90%;" />
+		</p>                
+                <p>
+			<label for="<?php echo $this->get_field_id('youtube'); ?>"><?php _e('You Tube Channel (insert URL after .com/)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('youtube'); ?>" name="<?php echo $this->get_field_name('youtube'); ?>" value="<?php echo $instance['youtube']; ?>" style="width:90%;" />
 		</p>
-                <!--<p>
-			<label for="<?php //echo $this->get_field_id('pinterest'); ?>"><?php //_e('Pinterest (name as it appears in URL after .com/)', 'smbw-language'); ?>:</label>
-			<input id="<?php //echo $this->get_field_id('pinterest'); ?>" name="<?php //echo $this->get_field_name('pinterest'); ?>" value="<?php //echo $instance['pinterest']; ?>" style="width:90%;" />
-		</p>-->
                 <p>
-			<label for="<?php echo $this->get_field_id('flickr'); ?>"><?php _e('flickr (insert user ID)', 'smbw-language'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('pinterest'); ?>"><?php _e('Pinterest (insert username as it appears in URL after .com/)', 'smbw-language'); ?></label>
+			<input id="<?php echo $this->get_field_id('pinterest'); ?>" name="<?php echo $this->get_field_name('pinterest'); ?>" value="<?php echo $instance['pinterest']; ?>" style="width:90%;" />
+		</p>
+                <p>
+			<label for="<?php echo $this->get_field_id('flickr'); ?>"><?php _e('Flickr (insert user ID including the bit after the @)', 'smbw-language'); ?></label>
 			<input id="<?php echo $this->get_field_id('flickr'); ?>" name="<?php echo $this->get_field_name('flickr'); ?>" value="<?php echo $instance['flickr']; ?>" style="width:90%;" />
 		</p>                
                 <p>

@@ -1,5 +1,5 @@
 /* Created By */
-.small{
+.social-media-badge .small{
     position: static;
     font-size: 8px;
     color: darkgray;
@@ -7,21 +7,22 @@
     text-align: right; 
 }
 
-.small a{
+.social-media-badge .small a{
     color: gray;
     font-weight: lighter;
 }
 
 /* Accordion */
-.social-accordion {
+.social-media-badge .social-accordion {
     height:auto !important;
 }
 
-.social-accordion .ui-accordion-content {
+.social-media-badge .ui-accordion-content {
     padding: 0 !important;
+    position: relative !important;
 }
 
-.social-accordion h3 a{
+.social-media-badge h3 a{
     font-size: 14px;
     font-style: normal;
     color: #555;
@@ -30,110 +31,110 @@
     margin-bottom: 0px;
 }
 
-.social-accordion .ui-accordion-header a { 
+.social-media-badge .ui-accordion-header a { 
     position: absolute;
     left: 2.25em;
     top: .75em;
     vertical-align: middle;
 }
 
-.social-accordion h3.ui-accordion-header {
+.social-media-badge h3.ui-accordion-header {
     margin-bottom: 0px;
 }
 
-.social-accordion h3{
+.social-media-badge h3{
     position: relative;
-    height: 2.5em;
+    height: 24px;
 }
 
-.social-accordion h3 a:hover{
+.social-media-badge h3 a:hover{
     text-decoration: none;
     color: #555;
 }
 
-.social-accordion span{
+/*.social-media-badge span{
     position: absolute;
     left: .5em;
     top: .75em;
     margin-top: 0px;
     height: 16px;
     width: 16px;
-}
+}*/
 
 /* Accordion Sections */
-.twitter .ui-icon {
+.social-media-badge .twitter .ui-icon {
     background-image: url(../images/twitter.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.twitter,
-.social-accordion .ui-state-active.twitter{
+.social-media-badge .ui-state-hover.twitter,
+.social-media-badge .ui-state-active.twitter{
     background: #69c0e6 !important;
 }
 
-.facebook .ui-icon {
+.social-media-badge .facebook .ui-icon {
     background-image: url(../images/facebook.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.facebook,
-.social-accordion .ui-state-active.facebook{
+.social-media-badge .ui-state-hover.facebook,
+.social-media-badge .ui-state-active.facebook{
     background: #005789 !important;
 }
 
-.googleplus .ui-icon {
+.social-media-badge .googleplus .ui-icon {
     background-image: url(../images/googleplus.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.googleplus,
-.social-accordion .ui-state-active.googleplus{
+.social-media-badge .ui-state-hover.googleplus,
+.social-media-badge .ui-state-active.googleplus{
     background: #e04727 !important;
 }
 
-.linkedin .ui-icon {
+.social-media-badge .linkedin .ui-icon {
     background-image: url(../images/linkedin.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.linkedin,
-.social-accordion .ui-state-active.linkedin{
+.social-media-badge .ui-state-hover.linkedin,
+.social-media-badge .ui-state-active.linkedin{
     background: #1683b1 !important;
 }
 
-.youtube .ui-icon {
+.social-media-badge .youtube .ui-icon {
     background-image: url(../images/youtube.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.youtube,
-.social-accordion .ui-state-active.youtube{
+.social-media-badge .ui-state-hover.youtube,
+.social-media-badge .ui-state-active.youtube{
     background: #fe3031 !important;
 }
 
-.pinterest .ui-icon {
+.social-media-badge .pinterest .ui-icon {
     background-image: url(../images/pinterest.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.pinterest,
-.social-accordion .ui-state-active.pinterst{
+.social-media-badge .ui-state-hover.pinterest,
+.social-media-badge .ui-state-active.pinterst{
     background: #db3037 !important;
 }
 
-.flickr .ui-icon {
+.social-media-badge .flickr .ui-icon {
     background-image: url(../images/flickr.png) !important;
     background-position: 0;
     background-size: 16px 16px;
 }
 
-.social-accordion .ui-state-hover.flickr,
-.social-accordion .ui-state-active.flickr{
+.social-media-badge .ui-state-hover.flickr,
+.social-media-badge .ui-state-active.flickr{
     background: #fb4aa6 !important;
 }

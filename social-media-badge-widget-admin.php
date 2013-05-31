@@ -100,8 +100,11 @@ else{
 ?>
 <div class="wrap">
     <?php 
-    echo '<div style="float:right;padding:10px;text-align:right;">' . __('Plugin created by', 'smbw-language') . '<br/><a href="http://stressfreesites.co.uk" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/stressfreesites.png') . '" /></a></div>';
+    echo '<div class="created-by">' . __('Plugin created by', 'smbw-language') . '<br/><a href="http://stressfreesites.co.uk" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/stressfreesites.png') . '" /></a></div>';
+        
     echo '<div id="icon-options-general" class="icon32"><br /></div><h2>' . __('Social Media Badge Widget', 'smbw-language') . '</h2>'; 
+    
+    echo '<div class="links"><a href="http://stressfreesites.co.uk/development" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/home_small.jpg') . '" /><a href="http://facebook.com/stressfreesites" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/facebook_small.jpg') . '" /><a href="http://twitter.com/stressfreesites" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/twitter_small.jpg') . '" /><a href="http://stressfreesites.co.uk/forums" target="_blank"><img src="' . plugins_url('social-media-badge-widget/images/support_small.jpg') . '" /></a></div>';            
     ?>
     <form name="smbw_form" method="post" action="<?php echo str_replace('%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <?php echo '<h3>' . __('General Settings', 'smbw-language') . '</h3>'; ?>
