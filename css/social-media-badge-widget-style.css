@@ -1,5 +1,5 @@
 /* Created By */
-.social-media-badge .small{
+.social-media-badge .small {
     position: static;
     font-size: 8px;
     color: darkgray;
@@ -7,61 +7,70 @@
     text-align: right; 
 }
 
-.social-media-badge .small a{
+.social-media-badge .small a {
     color: gray;
     font-weight: lighter;
 }
 
-/* Accordion */
+/* Accordion Header */
 .social-media-badge .social-accordion {
-    height:auto !important;
+    height: auto !important;
 }
 
-.social-media-badge .ui-accordion-content {
-    padding: 0 !important;
-    position: relative !important;
-}
-
-.social-media-badge h3 a{
-    font-size: 14px;
-    font-style: normal;
-    color: #555;
-    line-height: 20px;
-    letter-spacing: 1px;
-    margin-bottom: 0px;
-}
-
-.social-media-badge .ui-accordion-header a { 
-    position: absolute;
-    left: 2.25em;
-    top: .75em;
-    vertical-align: middle;
-}
-
-.social-media-badge h3.ui-accordion-header {
-    margin-bottom: 0px;
-}
-
-.social-media-badge h3{
+.social-media-badge .social-accordion .ui-accordion-header {
     position: relative;
-    height: 24px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    padding-left: 1.75em;
+    height: 2.5em;
 }
 
-.social-media-badge h3 a:hover{
-    text-decoration: none;
-    color: #555;
-}
-
-/*.social-media-badge span{
-    position: absolute;
-    left: .5em;
-    top: .75em;
+.social-media-badge .ui-accordion .ui-accordion-header:first-child {
     margin-top: 0px;
-    height: 16px;
-    width: 16px;
-}*/
+}
 
-/* Accordion Sections */
+.social-media-badge .social-accordion .ui-accordion-header span {
+    left: 0.75em;
+}
+
+.social-media-badge .social-accordion .ui-accordion-header a {
+    position: absolute;
+    left: 2.75em;
+    top: 50%;
+    margin-top: -0.6em;
+    margin-bottom: 0px;
+    color: #333;
+    font-size: 1em;
+    font-style: normal;
+    line-height: 1em;
+    letter-spacing: 0.05em;
+}
+
+.social-media-badge .ui-accordion .ui-accordion-header:hover a,
+.social-media-badge .ui-accordion .ui-accordion-header-active a {
+    text-decoration: none;
+    color: #eee;
+}
+
+.social-media-badge .ui-corner-all, 
+.social-media-badge .ui-corner-top,
+.social-media-badge .ui-corner-bottom,
+.social-media-badge.ui-corner-right, 
+.social-media-badge.ui-corner-tr {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.social-media-badge .ui-corner-all,
+.social-media-badge .ui-corner-top,
+.social-media-badge .ui-corner-bottom,
+.social-media-badge .ui-corner-left,
+.social-media-badge .ui-corner-tl {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Accordion Icons */
 .social-media-badge .twitter .ui-icon {
     background-image: url(../images/twitter.png) !important;
     background-position: 0;
@@ -69,7 +78,7 @@
 }
 
 .social-media-badge .ui-state-hover.twitter,
-.social-media-badge .ui-state-active.twitter{
+.social-media-badge .ui-state-active.twitter {
     background: #69c0e6 !important;
 }
 
@@ -80,7 +89,7 @@
 }
 
 .social-media-badge .ui-state-hover.facebook,
-.social-media-badge .ui-state-active.facebook{
+.social-media-badge .ui-state-active.facebook {
     background: #005789 !important;
 }
 
@@ -91,7 +100,7 @@
 }
 
 .social-media-badge .ui-state-hover.googleplus,
-.social-media-badge .ui-state-active.googleplus{
+.social-media-badge .ui-state-active.googleplus {
     background: #e04727 !important;
 }
 
@@ -102,7 +111,7 @@
 }
 
 .social-media-badge .ui-state-hover.linkedin,
-.social-media-badge .ui-state-active.linkedin{
+.social-media-badge .ui-state-active.linkedin {
     background: #1683b1 !important;
 }
 
@@ -113,7 +122,7 @@
 }
 
 .social-media-badge .ui-state-hover.youtube,
-.social-media-badge .ui-state-active.youtube{
+.social-media-badge .ui-state-active.youtube {
     background: #fe3031 !important;
 }
 
@@ -124,7 +133,7 @@
 }
 
 .social-media-badge .ui-state-hover.pinterest,
-.social-media-badge .ui-state-active.pinterst{
+.social-media-badge .ui-state-active.pinterst {
     background: #db3037 !important;
 }
 
@@ -135,6 +144,22 @@
 }
 
 .social-media-badge .ui-state-hover.flickr,
-.social-media-badge .ui-state-active.flickr{
+.social-media-badge .ui-state-active.flickr {
     background: #fb4aa6 !important;
+}
+
+/* Accordion Content */
+.social-media-badge .ui-accordion-content {
+    padding: 0 !important;
+    position: relative !important;
+}
+
+.social-media-badge .ui-accordion-content-active {
+    height: auto !important;
+}
+
+.social-media-badge .linkedin-content {
+     overflow: visible;
+     direction: rtl;
+     right: 0;
 }
