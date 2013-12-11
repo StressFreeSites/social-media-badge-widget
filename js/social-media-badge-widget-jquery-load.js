@@ -42,6 +42,9 @@ jQuery('document').ready(function($) {
     defaultBackground = $('.social-accordion .ui-state-default').not('.ui-state-active').css('background-color');
 
     $('.social-accordion .ui-state-default').css('background', defaultBackground);
+    
+    $('.social-media-badge .preloader').css('display', 'none');
+    $('.social-media-badge .social-accordion').css('display', 'block');  
 });
 
 jQuery(window).load(function () {

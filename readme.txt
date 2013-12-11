@@ -4,7 +4,7 @@ Donate link: http://stressfreesites.co.uk/plugins
 Tags: social media, badge, widget, facebook, twitter, linked in, you tube
 Requires at least: 3.0.0
 Tested up to: 3.5.1
-Stable tag: 2.5
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,7 +51,11 @@ Yes, just do not enter any information for that social media channel and that se
 
 == Changelog ==
 
-= 2.4 =
+= 2.6.0 =
+* Larger space between boxes
+* Bug version increments
+
+= 2.5 =
 * Improvements to widget UI
 * Compatability with 2013 theme
 

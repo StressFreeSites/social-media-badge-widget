@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.5
+Version: 2.6.0
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 License: GPL2
@@ -206,7 +206,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
             /* Accordion creation */
             echo ('<input type="hidden" id="smbw_collapsible" value="' . get_option('smbw_collapsible') . '" />
                    <input type="hidden" id="smbw_allClosed" value="' . get_option('smbw_allClosed') . '" />
-                   <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '" />    
+                   <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '" />  
+                   <div class="preloader"></div>    
                    <div class="social-accordion">');
 
             /* Displays each Accordion tab in turn */
