@@ -3,13 +3,14 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.6.0
+Version: 2.6.1
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
+Text Domain: smbw
 License: GPL2
 */
 
-/*  Copyright 2012 StressFree Sites  (info@stressfreesites.co.uk : alex@stressfreesites.co.uk)
+/*  Copyright 2014 StressFree Sites  (info@stressfreesites.co.uk : alex@stressfreesites.co.uk)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 3, as 
@@ -25,9 +26,14 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+/* Load admin settings page */
+if ( is_admin() ) {
+    require_once('social-media-badge-widget-admin.php');
+}
+
 /* Localisation of text */
 function smbw_init() {
-  load_plugin_textdomain( 'smbw-language', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+  load_plugin_textdomain( 'smbw', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 add_action('plugins_loaded', 'smbw_init');
 
@@ -35,104 +41,147 @@ function smbw_enqueue_scripts() {
     /* Load custom scripts */
     
     /* Select which scripts to load */
-    $loadScripts = get_option('smbw_load_scripts', array('jQuery' => 1, 
-                                                     'jQuery-ui-core' => 1,
-                                                     'jQuery-ui-accordion' => 1));
+    $settings = get_option('smbw_settings','');
 
-    if(isset($loadScripts['jQuery'])){
-        if(isset($loadScripts['jQuery-ui-core'])){
-            if(isset($loadScripts['jQuery-ui-accordion'])){
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-core','jquery-ui-accordion'),'1.0',true);
+    if($settings['loadScripts']['jQuery'] === 'true'){
+        if($settings['loadScripts']['jQuery-ui-core'] === 'true'){
+            if($settings['loadScripts']['jQuery-ui-accordion'] === 'true'){
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery','jquery-ui-core','jquery-ui-accordion'),'1.0',true);
             }
             else{
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-core'),'1.0',true);
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery','jquery-ui-core'),'1.0',true);
             }
         }
         else{
-            if(isset($loadScripts['jQuery-ui-accordion'])){
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery','jquery-ui-accordion'),'1.0',true);          
+            if($settings['loadScripts']['jQuery-ui-accordion'] === 'true'){
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery','jquery-ui-accordion'),'1.0',true);          
             }
             else{
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery'),'1.0',true);
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery'),'1.0',true);
             }
         }
     }
     else{
-        if(isset($loadScripts['jQuery-ui-core'])){
-            if(isset($loadScripts['jQuery-ui-accordion'])){
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-core','jquery-ui-accordion'),'1.0',true);
+        if($settings['loadScripts']['jQuery-ui-core'] === 'true'){
+            if($settings['loadScripts']['jQuery-ui-accordion'] === 'true'){
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery-ui-core','jquery-ui-accordion'),'1.0',true);
             }
             else{
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-core'),'1.0',true);
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery-ui-core'),'1.0',true);
             }
         }
         else{
-            if(isset($loadScripts['jQuery-ui-accordion'])){
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array('jquery-ui-accordion'),'1.0',true);
+            if($settings['loadScripts']['jQuery-ui-accordion'] === 'true'){
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array('jquery-ui-accordion'),'1.0',true);
             }
             else{
-                wp_enqueue_script('social-media-badge-widget-jquery-load', plugins_url('social-media-badge-widget/js/social-media-badge-widget-jquery-load.js'), array(),'1.0',true);
+                wp_enqueue_script('social-media-badge-widget', plugins_url('social-media-badge-widget/js/social-media-badge-widget.min.js'), array(),'1.0',true);
             }           
         }     
     }
 
     //pass plugin URL variable into Javascript
-    wp_localize_script('social-media-badge-widget-jquery-load', 'website_information', array( 'plugin_url' => plugins_url() ));
+    wp_localize_script('social-media-badge-widget', 'website_information', array( 'plugin_url' => plugins_url() ));
 
 }    
 add_action('wp_enqueue_scripts', 'smbw_enqueue_scripts');
 
-function smbw_enqueue_styles() { 
-    /* Load custom styling */
-    
+function smbw_enqueue_styles() {  
     /* Load selected style */
-    $loadJqueryUI = get_option('smbw_load_jquery_ui','true');
-    if($loadJqueryUI){
-        $style = get_option('smbw_style','Grey');
-        switch($style){
+    $settings = get_option('smbw_settings','');
+    if($settings['loadJqueryUI'] === 'true'){   
+        switch($settings['style']){
             case 'Grey':
-                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui.css')); 
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-grey.min.css')); 
                 break;
             case 'Black':
-                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui-black.css'));
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-black.min.css'));
                 break;
             case 'Blue':
-                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui-blue.css'));
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-blue.min.css'));
+                break;
+            case 'Red':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-red.min.css'));
+                break;
+            case 'Green':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-green.min.css'));
+                break;
+            case 'Skeleton':
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-skeleton.min.css'));
+                wp_enqueue_style('social-media-badge-widget-skeleton-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-skeleton.min.css'));
                 break;
             default:
-                wp_enqueue_style('social-media-badge-widget-jquery-ui-style', plugins_url('social-media-badge-widget/css/jquery-ui.css')); 
+                wp_enqueue_style('social-media-badge-widget-jquery-ui', plugins_url('social-media-badge-widget/css/jquery-ui-skeleton.min.css')); 
+                wp_enqueue_style('social-media-badge-widget-skeleton-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-skeleton.min.css'));
                 break;
         }
-        wp_enqueue_style('social-media-badge-widget-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style.css'), array('social-media-badge-widget-jquery-ui-style'));
+        wp_enqueue_style('social-media-badge-widget', plugins_url('social-media-badge-widget/css/social-media-badge-widget.min.css'), array('social-media-badge-widget-jquery-ui'));
     }
     else{
-        wp_enqueue_style('social-media-badge-widget-style', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style.css'), array());
+        wp_enqueue_style('social-media-badge-widget', plugins_url('social-media-badge-widget/css/social-media-badge-widget.min.css'), array());
     }
      
 } 
 add_action('wp_print_styles', 'smbw_enqueue_styles');
 
-/* Admin page functionality */
-function smbw_admin(){
-    include ('social-media-badge-widget-admin.php');
-}
-function smbw_admin_init(){   
-    wp_register_style('social-media-badge-widget-style-admin', plugins_url('social-media-badge-widget/css/social-media-badge-widget-style-admin.css'));
-}
-add_action('admin_init', 'smbw_admin_init');
+function smbw_activate() {
+    // Get old widget information, and save in new formate in database
+    
+    // Retrieve old widget informaiton  
+    $widget = get_option('widget_social-media-badge-widget','');
 
-function smbw_admin_actions(){
-   /* Register our plugin page */
-   $page = add_options_page('Social Media Badge Widget','Social Media Badge Widget', 'manage_options', 'socialmediabadgewidget', 'smbw_admin');
+    // Retrieve new settings information
+    smbw_settings_init();
+    $settings = get_option('smbw_settings');
+    
+    if($widget != '' && isset($widget[3])){
+        $settings['twitter'] = $widget[3]['twitter'];
+        $settings['facebook'] = $widget[3]['facebook'];
+        $settings['facebook_badge'] = $widget[3]['facebook_badge'];
+        $settings['googleplus'] = $widget[3]['googleplus'];
+        $settings['googleplus_profile'] = $widget[3]['googleplus_profile'];
+        $settings['linkedin'] = $widget[3]['linkedin'];
+        $settings['linkedin_profile'] = $widget[3]['linkedin_profile'];            
+        $settings['youtube'] = $widget[3]['youtube'];
+        $settings['pinterest'] = $widget[3]['pinterest'];
+        $settings['flickr'] = $widget[3]['flickr'];
 
-   /* Using registered $page handle to hook stylesheet loading */
-   add_action('admin_print_styles-' . $page, 'smbw_admin_styles');
+        $settings['createdBy'] = $widget[3]['createdBy'];
+    }
+    
+    $settings['openSelection'] = get_option('smbw_openSelection');
+    $settings['collapsible'] = get_option('smbw_collapsible');
+    $settings['allClosed'] = get_option('smbw_allClosed');
+    $settings['load_jquery_ui'] = get_option('smbw_load_jquery_ui');
+    $settings['load_scripts'] = get_option('smbw_load_scripts');
+    $settings['style'] = get_option('smbw_style');
+    
+    $settings['faces_facebook'] = get_option('smbw_faces_facebook');
+    $settings['stream_facebook'] = get_option('smbw_stream_facebook');
+    $settings['tweets'] = get_option('smbw_tweets');
+    $settings['live_twitter'] = get_option('smbw_live_twitter');
+
+    // Save settings in new format
+    update_option('smbw_settings', $settings);
+    
+    // Delete old settings
+    delete_option('widget_social-media-badge-widget');
+    delete_option('smbw_openSelection');
+    delete_option('smbw_collapsible');
+    delete_option('smbw_allClosed');
+    delete_option('smbw_load_jquery_ui');
+    delete_option('smbw_load_scripts');
+    delete_option('smbw_style');
+    delete_option('smbw_faces_facebook');
+    delete_option('smbw_stream_facebook');
+    delete_option('smbw_tweets');
+    delete_option('smbw_live_twitter');
     
 }
-add_action('admin_menu','smbw_admin_actions');
-   
+register_activation_hook( __FILE__, 'smbw_activate' );
+  
 function smbw_admin_styles() {
-   wp_enqueue_style('social-media-badge-widget-style-admin');
+   wp_enqueue_style('social-media-badge-widget-admin');
 }
    
 /* Message box */
@@ -142,7 +191,7 @@ function smbw_theme_admin_notice() {
         /* Check that the user hasn't already clicked to ignore the message */
 	if ( ! get_user_meta($user_id, 'smbw_theme_ignore_notice') ) {
             echo '<div class="updated"><p>'; 
-            printf(__('<p>Thank you for downloading Social Media Badge Widget. We hope you enjoy using the plugin, maybe some of our <a href="http://stressfreesites.co.uk/development" target="_blank">other plugins</a> would be of interest to you.</p><p>We have just launched a new Wordpress theme which might be of interest - <a href="http://www.mojo-themes.com/item/simple-setup/demo/" target="_blank">take a look</a>.</p><a href="%1$s">Hide This Notice</a>'), '?smbw_theme_nag_ignore=0');
+            printf(__('<p>Thank you for downloading Social Media Badge Widget. We hope you enjoy using the plugin, maybe some of our <a href="http://stressfreesites.co.uk/development/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank">other plugins</a> would be of interest to you.</p><p>We have just launched a new Wordpress theme which might be of interest - <a href="http://www.mojo-themes.com/item/simple-setup/demo/" target="_blank">take a look</a>.</p><a href="%1$s">Hide This Notice</a>'), '?smbw_theme_nag_ignore=0');
             echo "</p></div>";
 	}
 }
@@ -157,11 +206,6 @@ function smbw_theme_nag_ignore() {
 	}
 }
 add_action('admin_init', 'smbw_theme_nag_ignore');
-
-//function smbw_datadisplay($count = 1){
-//    $smbwdb = new wpdb(get_option('smbw_dbuser'));
-//    $data = $smbwdb->get_var("SQL");
-//}
 
 /* Extending widget class to enable plugin */
 class Social_Media_Badge_Widget extends WP_Widget {
@@ -183,19 +227,35 @@ class Social_Media_Badge_Widget extends WP_Widget {
             /* User-selected settings. */
             $title = apply_filters('widget_title', $instance['title']);
             $width = $instance['width'];
-            $twitter = $instance['twitter'];
-            $facebook = $instance['facebook'];
-            $facebook_badge = $instance['facebook_badge'];
-            $googleplus = $instance['googleplus'];
-            $googleplus_profile = $instance['googleplus_profile'];
-            $linkedin = $instance['linkedin'];
-            $linkedin_profile = $instance['linkedin_profile'];            
-            $youtube = $instance['youtube'];
-            $pinterest = $instance['pinterest'];
-            $flickr = $instance['flickr'];
             
-            $createdby = isset($instance['createdby']) ? $instance['createdby'] : false;
+            $settings = get_option('smbw_settings');
+
+            $twitter = stripslashes($settings['twitter']);
+            $replies_twitter = $settings['replies_twitter'];
+            $colour_scheme_twitter = $settings['colour_scheme_twitter'];
             
+            $facebook = stripslashes($settings['facebook']);
+            $stream_facebook = $settings['stream_facebook'];
+            $faces_facebook = $settings['faces_facebook'];
+            $colour_scheme_facebook = $settings['colour_scheme_facebook'];
+            $facebook_badge = stripslashes($settings['facebook_badge']);
+            
+            $googleplus = stripslashes($settings['googleplus']);
+            $googleplus_profile = stripslashes($settings['googleplus_profile']);
+            
+            $linkedin = stripslashes($settings['linkedin']);
+            $linkedin_profile = stripslashes($settings['linkedin_profile']);
+            $side_linkedin = stripslashes($settings['side_linkedin']);
+            
+            $youtube = stripslashes($settings['youtube']);
+            $pinterest = stripslashes($settings['pinterest']);
+            $flickr = stripslashes($settings['flickr']);
+            
+
+            
+            $icons = strtolower($settings['icons']);
+            $createdBy = $settings['createdBy'];
+                        
             /* Before widget (defined by themes). */
             echo $before_widget .'<div class="social-media-badge">';
             
@@ -204,34 +264,32 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo $before_title . $title . $after_title;
             
             /* Accordion creation */
-            echo ('<input type="hidden" id="smbw_collapsible" value="' . get_option('smbw_collapsible') . '" />
-                   <input type="hidden" id="smbw_allClosed" value="' . get_option('smbw_allClosed') . '" />
-                   <input type="hidden" id="smbw_openSelection" value="' . get_option('smbw_openSelection') . '" />  
+            echo ('<input type="hidden" id="smbw_collapsible" value="' . $settings['collapsible'] . '" />
+                   <input type="hidden" id="smbw_allClosed" value="' . $settings['allClosed'] . '" />
+                   <input type="hidden" id="smbw_openSelection" value="' . $settings['openSelection'] . '" />  
                    <div class="preloader"></div>    
                    <div class="social-accordion">');
 
             /* Displays each Accordion tab in turn */
-            if ($twitter){
-                    echo ('<h3 class="twitter"><a href="#">'. __('Twitter', 'smbw-language') . '</a></h3><div class="twitter-content">');
+            if ($instance['showTwitter'] && $twitter){
+                    echo ('<h3 class="twitter ' . $icons . '"><a href="#">'. __('Twitter', 'smbw') . '</a></h3><div class="twitter-content">');
 
-                    echo('<a class="twitter-timeline" href="https://twitter.com/'.$twitter.'" data-widget-id="340472704517947394" data-screen-name="'.$twitter.'" data-show-replies="false">Tweets by @'.$twitter.'</a>
+                    echo('<a class="twitter-timeline" href="https://twitter.com/'.$twitter.'" data-widget-id="340472704517947394" data-screen-name="'.$twitter.'" data-theme="' . $colour_scheme_twitter . '" data-show-replies="' . $replies_twitter .'">Tweets by @'.$twitter.'</a>
                             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                          ');                        
                     
                     echo ('</div>');
             }
 
-            if ($facebook || $facebook_badge){
-                    echo ('<h3 class="facebook"><a href="#">' . __('Facebook', 'smbw-language') . '</a></h3><div class="facebook-content">');
-                    if($facebook){
-                        $stream_facebook = get_option('smbw_stream_facebook', 'true');
-                        $faces_facebook = get_option('smbw_faces_facebook', 'false');
+            if ($instance['showFacebook'] && ($facebook || $facebook_badge)){
+                    echo ('<h3 class="facebook ' . $icons . '"><a href="#">' . __('Facebook', 'smbw') . '</a></h3><div class="facebook-content">');
+                    if($facebook){                        
                         //adjust the height accordly depending on which options are selected.
-                        if($stream_facebook == 'true' && $faces_facebook == 'true'){
+                        if($stream_facebook === 'true' && $faces_facebook === 'true'){
                             $height = '675';
                             $frame_height = '685';
                         }
-                        else if($stream_facebook == 'true' || $faces_facebook == 'true'){
+                        else if($stream_facebook === 'true' || $faces_facebook === 'true'){
                             $height = '475';
                             $frame_height = '485';
                         }
@@ -239,7 +297,7 @@ class Social_Media_Badge_Widget extends WP_Widget {
                             $height = '160';
                             $frame_height = '170';
                         }
-                        echo ('<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2F'.$facebook.'&width='.$width.'&height=' . $height . '&colorscheme=light&show_faces=' . $faces_facebook . '&border_color&stream=' . $stream_facebook . '&header=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:' . $frame_height . 'px;" allowTransparency="true"></iframe>');
+                        echo ('<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2F'.$facebook.'&width='.$width.'&height=' . $height . '&colorscheme=' . $colour_scheme_facebook . '&show_faces=' . $faces_facebook . '&border_color&stream=' . $stream_facebook . '&header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:'.$width.'px; height:' . $frame_height . 'px;" allowTransparency="true"></iframe>');
                        
                     }
                     if($facebook_badge){
@@ -248,8 +306,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>');
             }
             
-            if ($googleplus || $googleplus_profile){
-                    echo ('<h3 class="googleplus"><a href="#">' . __('Google+', 'smbw-language') . '</a></h3><div class="googleplus-content">');
+            if ($instance['showGooglePlus'] && ($googleplus || $googleplus_profile)){
+                    echo ('<h3 class="googleplus ' . $icons . '"><a href="#">' . __('Google+', 'smbw') . '</a></h3><div class="googleplus-content">');
                     if($googleplus){
                         echo ('<!-- Place this tag where you want the widget to render. -->
                                 <div class="g-page" data-width="' . $width . '" data-href="https://plus.google.com/'. $googleplus . '" data-rel="publisher"></div>
@@ -274,8 +332,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>'); 
             }
             
-            if ($linkedin || $linkedin_profile){
-                    echo ('<h3 class="linkedin"><a href="#">' . __('LinkedIn', 'smbw-language') . '</a></h3><div class="linkedin-content"><div style="width:364px">');
+            if ($instance['showLinkedIn'] && ($linkedin || $linkedin_profile)){
+                    echo ('<h3 class="linkedin ' . $icons . '"><a href="#">' . __('LinkedIn', 'smbw') . '</a></h3><div class="linkedin-content ' . $side_linkedin . '"><div style="width:364px">');
                     if ($linkedin){
                         echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
                             <script type="IN/CompanyProfile" data-id="'.$linkedin.'" data-format="inline"></script>');
@@ -287,8 +345,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div></div>');
             }
                         
-            if ($youtube){
-                    echo ('<h3 class="youtube"><a href="#">' . __('You Tube', 'smbw-language') . '</a></h3><div class="youtube-content">');
+            if ($instance['showYouTube'] && $youtube){
+                    echo ('<h3 class="youtube ' . $icons . '"><a href="#">' . __('You Tube', 'smbw') . '</a></h3><div class="youtube-content">');
                     echo ('<iframe src="http://www.youtube.com/subscribe_widget?p='.$youtube.'" 
                                 style="overflow: hidden; height: 105px; width: '.$width.'px; border: 0;" 
                                 scrolling="no" frameBorder="0">
@@ -296,44 +354,20 @@ class Social_Media_Badge_Widget extends WP_Widget {
                     echo ('</div>');
             }
             
-            if ($pinterest){
-                    echo ('<h3 class="pinterest"><a href="#">' . __('Pinterest', 'smbw-language') . '</a></h3><div class="pinterest-content">');
-                    $pinterest_width = $width - 20;
-                    echo ('<a data-pin-do="embedUser" href="http://pinterest.com/' . $pinterest . '" data-pin-board-width="' . $pinterest_width . '"></a>');
-                    echo ('<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>');
-////                    echo ('<script type="text/javascript">
-////                            (function (w, d, load) {
-////                             var script, 
-////                             first = d.getElementsByTagName("SCRIPT")[0],  
-////                             n = load.length, 
-////                             i = 0,
-////                             go = function () {
-////                               for (i = 0; i < n; i = i + 1) {
-////                                 script = d.createElement("SCRIPT");
-////                                 script.type = "text/javascript";
-////                                 script.async = true;
-////                                 script.src = load[i];
-////                                 first.parentNode.insertBefore(script, first);
-////                               }
-////                             }
-////                             if (w.attachEvent) {
-////                               w.attachEvent("onload", go);
-////                             } else {
-////                               w.addEventListener("load", go, false);
-////                             }
-////                            }(window, document, 
-////                             ["//assets.pinterest.com/js/pinit.js"]
-////                            ));    
-////                          </script>');
+            if ($instance['showPinterest'] && $pinterest){
+                    echo ('<h3 class="pinterest ' . $icons . '"><a href="#">' . __('Pinterest', 'smbw') . '</a></h3><div class="pinterest-content">');
+                    $pinterest_width = 60;
+                    echo ('<a data-pin-do="embedUser" href="http://www.pinterest.com/' . $pinterest . '/" data-pin-scale-width="' . $pinterest_width . '" data-pin-scale-height="200" data-pin-board-width="' . $width . '">Visit ' . $pinterest . '\'s profile on Pinterest.</a>');
+                    echo ('<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>');
                     echo ('</div>');                    
             }
             
-            if ($flickr){
-                    echo ('<h3 class="flickr"><a href="#">' . __('Flickr', 'smbw-language') . '</a></h3><div class="flickr-content">');
+            if ($instance['showFlickr'] && $flickr){
+                    echo ('<h3 class="flickr ' . $icons . '"><a href="#">' . __('Flickr', 'smbw') . '</a></h3><div class="flickr-content">');
                     echo ('<style type="text/css"> 
-                            .flickr_badge_image {margin:0px;display:inline;}
-                            .flickr_badge_image img {border: 0px solid #666666 !important; padding:1px; margin:2px;}
-                            #flickr_badge_wrapper {width:'.$width.';text-align:left}
+                              .flickr_badge_image {margin:0px;display:inline;}
+                              .flickr_badge_image img {border: 1px solid #666666 !important; padding:1px; margin:2px;}
+                              #flickr_badge_wrapper {width:' . $width .';text-align:left}
                            </style>');
                     echo ('<div id="flickr_badge_wrapper"><script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=9&display=latest&size=s&layout=x&source=user&user='. $flickr .'"></script></div>');
                     echo ('</div>');                    
@@ -343,8 +377,8 @@ class Social_Media_Badge_Widget extends WP_Widget {
             echo ('</div><!-- .social-accordion -->');
             
             /* Copyright */        
-            if ($createdby){
-                    echo ('<div class="small"><p>' . __('Plugin created by', 'smbw-language') . ' <a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget" target="_blank">StressFree Sites</a></p></div>');
+            if ($createdBy === 'true'){
+                    echo ('<div class="small"><p>' . __('Plugin created by', 'smbw') . ' <a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget/?utm_source=frontend&utm_medium=plugin&utm_campaign=wordpress" target="_blank">StressFree Sites</a></p></div>');
             }
             
             /* After widget (defined by themes). */
@@ -358,100 +392,75 @@ class Social_Media_Badge_Widget extends WP_Widget {
             /* Strip tags (if needed) and update the widget settings. */
             $instance['title'] = sanitize_text_field($new_instance['title']);
             $instance['width'] = sanitize_text_field($new_instance['width']);
-            $instance['twitter'] = sanitize_text_field($new_instance['twitter']);
-            $instance['facebook'] = sanitize_text_field($new_instance['facebook']);
-            $instance['facebook_badge'] = $new_instance['facebook_badge'];
-            $instance['googleplus'] = sanitize_text_field($new_instance['googleplus']);
-            $instance['googleplus_profile'] = sanitize_text_field($new_instance['googleplus_profile']);
-            $instance['linkedin'] = sanitize_text_field($new_instance['linkedin']);
-            $instance['linkedin_profile'] = sanitize_text_field($new_instance['linkedin_profile']);            
-            $instance['youtube'] = sanitize_text_field($new_instance['youtube']);
-            $instance['pinterest'] = strip_tags($new_instance['pinterest']);
-            $instance['flickr'] = sanitize_text_field($new_instance['flickr']);
-            $instance['createdby'] = $new_instance['createdby'];
+            
+            $instance['showTwitter'] = $new_instance['showTwitter'];
+            $instance['showFacebook'] = $new_instance['showFacebook'];
+            $instance['showGooglePlus'] = $new_instance['showGooglePlus'];
+            $instance['showLinkedIn'] = $new_instance['showLinkedIn'];
+            $instance['showYouTube'] = $new_instance['showYouTube'];
+            $instance['showPinterest'] = $new_instance['showPinterest'];
+            $instance['showFlickr'] = $new_instance['showFlickr'];
+            
             return $instance;
     }
     
     /* Form for the Wordpress backend */
     function form($instance) {
             /* Set up some default widget settings. */
-            $defaults = array('title' => 'Stay Connected', 'width' => '190', 'twitter' => '', 'facebook' => '', 'facebook_badge' => '', 'googleplus' => '', 'googleplus_profile' => '', 'linkedin' => '', 'linkedin_profile' => '', 'youtube' => '', 'pinterest' => '', 'flickr' => '', 'createdby' => 'off');
+            $defaults = array('title' => 'Stay Connected', 'width' => '190', 
+                            'showTwitter' => 'true', 'showFacebook' => 'true', 'showGooglePlus' => 'true', 'showLinkedIn' => 'true', 'showYouTube' => 'true', 'showPinterest' => 'true', 'showFlickr' => 'true');
             
             /* Creation of the form */
             $instance = wp_parse_args((array) $instance, $defaults); ?>
-                <h3><?php _e('General', 'smbw-language'); ?></h3>
-		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'smbw-language'); ?></label>
+		<h3><?php _e('General Options', 'smbw'); ?></h3>
+                <p>
+                    <?php _e('Please add all the social channel details through the "', 'smbw'); ?><a href="options-general.php?page=social-media-badge-widget"><?php _e('Social Media Badge Widget', 'smbw'); ?></a><?php _e('" settings page.', 'smbw'); ?>
+                </p> 
+                <p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'smbw'); ?></label>
 			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('The title of the widget, leave blank for no title.', 'smbw-language'); ?></span>
+                        <span class="description"><?php _e('The title of the widget, leave blank for no title.', 'smbw'); ?></span>
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', 'smbw-language'); ?></label>
+			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', 'smbw'); ?></label>
 			<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" value="<?php echo $instance['width']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('The number of pixels for the widget to take.', 'smbw-language'); ?></span>
+                        <span class="description"><?php _e('The number of pixels for the widget to take.', 'smbw'); ?></span>
 		</p>
+                <h3><?php _e('Section Display Options', 'smbw'); ?></h3>
                 <p>
-			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('createdby'); ?>" name="<?php echo $this->get_field_name('createdby'); ?>" <?php checked($instance['createdby'], 'on'); ?>/>
-			<label for="<?php echo $this->get_field_id('createdby'); ?>"><?php _e('Display created by?', 'smbw-language'); ?></label>
-                        <span class="description"><?php _e('Please only remove this after making a ', 'smbw-language'); ?><a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget" target="_blank"><?php _e('donation', 'smbw-language'); ?></a><?php _e(', so we can continue making plugins like these.', 'smbw-language'); ?></span>
-		</p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/twitter.png'); ?>" /> <?php _e('Twitter', 'smbw-language'); ?></h3>
-                <p>
-			<label for="<?php echo $this->get_field_id('twitter'); ?>"><?php _e('Username', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('twitter'); ?>" name="<?php echo $this->get_field_name('twitter'); ?>" value="<?php echo $instance['twitter']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert without the \'@\'.', 'smbw-language'); ?></span>
-                </p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/facebook.png'); ?>" /> <?php _e('Facebook', 'smbw-language'); ?></h3>
-                <p>
-			<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php _e('Business Page', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('facebook'); ?>" name="<?php echo $this->get_field_name('facebook'); ?>" value="<?php echo $instance['facebook']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert the business page URL (the part at the end, after facebook.com/', 'smbw-language'); ?></span>
+                    <?php _e('Select which social media channels you would like to be displayed on this widget.', 'smbw'); ?> 
                 </p>
                 <p>
-			<label for="<?php echo $this->get_field_id('facebook_badge'); ?>"><?php _e('Profile Badge', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('facebook_badge'); ?>" name="<?php echo $this->get_field_name('facebook_badge'); ?>" value="<?php esc_html_e($instance['facebook_badge']); ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Create a badge ', 'smbw-language');?><a href="http://facebook.com/badges" target="_blank"><?php _e('here', 'smbw-language'); ?></a><?php _e(' then press \'other\' to see code. Finally, copy the code into box above.', 'smbw-language'); ?></span>
-		</p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/googleplus.png'); ?>" /> <?php _e('Google+', 'smbw-language'); ?></h3>
-                <p>
-			<label for="<?php echo $this->get_field_id('googleplus'); ?>"><?php _e('Page ID', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('googleplus'); ?>" name="<?php echo $this->get_field_name('googleplus'); ?>" value="<?php echo $instance['googleplus']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert ID for page, this is the number in the URL when viewing your Google+ page.', 'smbw-language'); ?></span>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showTwitter'); ?>" name="<?php echo $this->get_field_name('showTwitter'); ?>" value="true" <?php checked($instance['showTwitter'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showTwitter'); ?>"><?php _e('Display Twitter', 'bcw'); ?></label>
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('googleplus_profile'); ?>"><?php _e('Profile ID', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('googleplus_profile'); ?>" name="<?php echo $this->get_field_name('googleplus_profile'); ?>" value="<?php echo $instance['googleplus_profile']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert ID profile, this is the number in the URL when viewing your Google+ profile.', 'smbw-language'); ?></span>
-		</p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/linkedin.png'); ?>" /> <?php _e('LinkedIn', 'smbw-language'); ?></h3>
-                <p>
-			<label for="<?php echo $this->get_field_id('linkedin'); ?>"><?php _e('Company ID', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('linkedin'); ?>" name="<?php echo $this->get_field_name('linkedin'); ?>" value="<?php echo $instance['linkedin']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert company ID, get ID ', 'smbw-language'); ?><a href="https://developer.linkedin.com/plugins/company-profile-plugin" target="_blank"><?php _e('here ', 'smbw-language'); ?></a><?php _e(' by typing in your company name then press get code. Finally, find the ID in the code.', 'smbw-language'); ?></span>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showFacebook'); ?>" name="<?php echo $this->get_field_name('showFacebook'); ?>" value="true" <?php checked($instance['showFacebook'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showFacebook'); ?>"><?php _e('Display Facebook', 'bcw'); ?></label>
 		</p>
                 <p>
-			<label for="<?php echo $this->get_field_id('linkedin_profile'); ?>"><?php _e('Profile URL', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('linkedin_profile'); ?>" name="<?php echo $this->get_field_name('linkedin_profile'); ?>" value="<?php echo $instance['linkedin_profile']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert public profile URL, after the linkedin.com/in/', 'smbw-language'); ?></span>
-		</p>  
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/youtube.png'); ?>" /> <?php _e('You Tube', 'smbw-language'); ?></h3>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showGooglePlus'); ?>" name="<?php echo $this->get_field_name('showGooglePlus'); ?>" value="true" <?php checked($instance['showGooglePlus'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showGooglePlus'); ?>"><?php _e('Display GooglePlus', 'bcw'); ?></label>
+		</p> 
+                 <p>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showLinkedIn'); ?>" name="<?php echo $this->get_field_name('showLinkedIn'); ?>" value="true" <?php checked($instance['showLinkedIn'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showLinkedIn'); ?>"><?php _e('Display LinkedIn', 'bcw'); ?></label>
+		</p>                
                 <p>
-			<label for="<?php echo $this->get_field_id('youtube'); ?>"><?php _e('Channel URL', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('youtube'); ?>" name="<?php echo $this->get_field_name('youtube'); ?>" value="<?php echo $instance['youtube']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert the channel URL, part after the youtube.com/', 'smbw-language'); ?></span>
-		</p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/pinterest.png'); ?>" /> <?php _e('Pinterest', 'smbw-language'); ?></h3>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showYouTube'); ?>" name="<?php echo $this->get_field_name('showYouTube'); ?>" value="true" <?php checked($instance['showYouTube'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showYouTube'); ?>"><?php _e('Display You Tube', 'bcw'); ?></label>
+		</p> 
                 <p>
-			<label for="<?php echo $this->get_field_id('pinterest'); ?>"><?php _e('Username', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('pinterest'); ?>" name="<?php echo $this->get_field_name('pinterest'); ?>" value="<?php echo $instance['pinterest']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert username, as it appears in URL after pinterest.com/', 'smbw-language'); ?></span>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showPinterest'); ?>" name="<?php echo $this->get_field_name('showPinterest'); ?>" value="true" <?php checked($instance['showPinterest'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showPinterest'); ?>"><?php _e('Display Pinterest', 'bcw'); ?></label>
 		</p>
-                <h3><img src="<?php echo plugins_url('social-media-badge-widget/images/flickr.png'); ?>" /> <?php _e('Flickr', 'smbw-language'); ?></h3>
                 <p>
-			<label for="<?php echo $this->get_field_id('flickr'); ?>"><?php _e('User ID', 'smbw-language'); ?></label>
-			<input id="<?php echo $this->get_field_id('flickr'); ?>" name="<?php echo $this->get_field_name('flickr'); ?>" value="<?php echo $instance['flickr']; ?>" style="width:90%;" />
-                        <span class="description"><?php _e('Insert user ID including the bit after the \'@\'.', 'smbw-language'); ?></span>
+			<input class="checkbox" type="checkbox" id="<?php echo $this->get_field_id('showFlickr'); ?>" name="<?php echo $this->get_field_name('showFlickr'); ?>" value="true" <?php checked($instance['showFlickr'], 'true'); ?>/>
+			<label for="<?php echo $this->get_field_id('showFlickr'); ?>"><?php _e('Display Flickr', 'bcw'); ?></label>
 		</p>
+                <p class="description">
+                   <?php _e('NOTE: sections will not be displayed if there is no social channels saved in them!', 'smbw'); ?>
+                </p>
                 <?php
     }
 }

@@ -1,54 +1,68 @@
-/* Created By */
-.social-media-badge .small {
-    position: static;
-    font-size: 8px;
-    color: darkgray;
-    font-weight: lighter;
-    text-align: right; 
-}
+/*  Copyright 2014 StressFree Sites  (info@stressfreesites.co.uk : alex@stressfreesites.co.uk)
 
-.social-media-badge .small a {
-    color: gray;
-    font-weight: lighter;
-}
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 3, as 
+    published by the Free Software Foundation.
 
-/* Preloader */
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+/*************** 
+ *
+ *   Preloader 
+ *
+ ***************/
 .social-media-badge .preloader {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -20px;
     margin-left: -20px;
     border: solid 3px;
-    border-color: #555 #fff;
+    border-color: #BBB #000;
     -webkit-border-radius: 1000px;
     border-radius: 1000px;
-    -webkit-animation-name: rotate;
-    -webkit-animation-duration: 1.5s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: rotate;
-    -moz-animation-duration: 1.5s;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: linear;
-    -o-animation-name: rotate;
-    -o-animation-duration: 1.5s;
-    -o-animation-iteration-count: infinite;
-    -o-animation-timing-function: linear;
-    animation-name: rotate;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    -webkit-animation:spin 3s linear infinite;
+    -moz-animation:spin 3s linear infinite;
+    animation:spin 3s linear infinite;
+}
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+
+@keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } 
+}
+
+.social-media-badge {
+    position: relative;
+    min-height: 100px;
 }
 
 .social-media-badge .social-accordion {
     display: none;
 }
 
-/* Accordion Header */
+/*************** 
+ *
+ *   Accordion Header 
+ *
+ ***************/
 .social-media-badge .social-accordion {
     height: auto !important;
 }
@@ -75,7 +89,8 @@
     top: 50%;
     margin-top: -0.6em;
     margin-bottom: 0px;
-    color: #333;
+    color: inherit;
+    font-family: inherit;
     font-size: 1em;
     font-style: normal;
     line-height: 1em;
@@ -106,11 +121,19 @@
     border-bottom-left-radius: 0;
 }
 
-/* Accordion Icons */
+/*************** 
+ *
+ *   Accordion Icons 
+ *
+ ***************/
 .social-media-badge .twitter .ui-icon {
     background-image: url(../images/twitter.png) !important;
     background-position: 0;
     background-size: 16px 16px;
+}
+
+.social-media-badge .twitter.grey .ui-icon {
+    background-image: url(../images/twitter_grey.png) !important;
 }
 
 .social-media-badge .ui-state-hover.twitter,
@@ -124,6 +147,10 @@
     background-size: 16px 16px;
 }
 
+.social-media-badge .facebook.grey .ui-icon {
+    background-image: url(../images/facebook_grey.png) !important;
+}
+
 .social-media-badge .ui-state-hover.facebook,
 .social-media-badge .ui-state-active.facebook {
     background: #005789 !important;
@@ -133,6 +160,10 @@
     background-image: url(../images/googleplus.png) !important;
     background-position: 0;
     background-size: 16px 16px;
+}
+
+.social-media-badge .googleplus.grey .ui-icon {
+    background-image: url(../images/googleplus_grey.png) !important;
 }
 
 .social-media-badge .ui-state-hover.googleplus,
@@ -146,6 +177,10 @@
     background-size: 16px 16px;
 }
 
+.social-media-badge .linkedin.grey .ui-icon {
+    background-image: url(../images/linkedin_grey.png) !important;
+}
+
 .social-media-badge .ui-state-hover.linkedin,
 .social-media-badge .ui-state-active.linkedin {
     background: #1683b1 !important;
@@ -155,6 +190,10 @@
     background-image: url(../images/youtube.png) !important;
     background-position: 0;
     background-size: 16px 16px;
+}
+
+.social-media-badge .youtube.grey .ui-icon {
+    background-image: url(../images/youtube_grey.png) !important;
 }
 
 .social-media-badge .ui-state-hover.youtube,
@@ -168,6 +207,10 @@
     background-size: 16px 16px;
 }
 
+.social-media-badge .pinterest.grey .ui-icon {
+    background-image: url(../images/pinterest_grey.png) !important;
+}
+
 .social-media-badge .ui-state-hover.pinterest,
 .social-media-badge .ui-state-active.pinterst {
     background: #db3037 !important;
@@ -179,12 +222,20 @@
     background-size: 16px 16px;
 }
 
+.social-media-badge .flickr.grey .ui-icon {
+    background-image: url(../images/flickr_grey.png) !important;
+}
+
 .social-media-badge .ui-state-hover.flickr,
 .social-media-badge .ui-state-active.flickr {
     background: #fb4aa6 !important;
 }
 
-/* Accordion Content */
+/*************** 
+ *
+ *   Accordion Content
+ *
+ ***************/
 .social-media-badge .ui-accordion-content {
     padding: 0 !important;
     position: relative !important;
@@ -194,8 +245,33 @@
     height: auto !important;
 }
 
-.social-media-badge .linkedin-content {
+.social-media-badge .ui-accordion .linkedin-content {
      overflow: visible;
-     direction: rtl;
      right: 0;
+}
+
+.social-media-badge .ui-accordion .linkedin-content.left {
+     direction: rtl;
+}
+
+.social-media-badge .ui-accordion .linkedin-content.right {
+     direction: ltr;
+}
+
+/*************** 
+ *
+ *   Created By 
+ *
+ ***************/
+.social-media-badge .small {
+    position: static;
+    font-size: 8px;
+    color: darkgray;
+    font-weight: lighter;
+    text-align: right; 
+}
+
+.social-media-badge .small a {
+    color: gray;
+    font-weight: lighter;
 }

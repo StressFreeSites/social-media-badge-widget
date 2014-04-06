@@ -3,18 +3,41 @@ Contributors: StressFree Sites
 Donate link: http://stressfreesites.co.uk/plugins
 Tags: social media, badge, widget, facebook, twitter, linked in, you tube
 Requires at least: 3.0.0
-Tested up to: 3.5.1
-Stable tag: 2.6.0
+Tested up to: 3.8
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin creates a widget which easily displays, without becoming cluttered, the social badge from the leading social media websites.
+This plugin creates a widget which easily displays the social badges from the leading social media websites in a clear an elegant way.
 
 == Description ==
 
-This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, Google+, LinkedIn and You Tube).
+This plugin creates a widget which easily displays the social badges from the leading social media websites (Twitter, Facebook, Google+, LinkedIn, You Tube, Pinterest and Flickr) in a clear and elegant way.
 
 It displays the information in an accordion, so only one section is open at a time, which ensures your website does not become cluttered visually.
+
+The plugin includes a plugin admin page where it is possible to customise everything from the social media channel to the visual styling of the accordion. 
+
+<h3>Plugin features</h3> 
+<ul>
+<li>Widget content displays in a jQuery accordion.</li>
+<li>Display Twitter, Facebook, Google+, LinkedI, You Tube, Pinterest, Flickr</li>
+<li>Customise the Twitter widget for different colour schemes and to show replies.</li>
+<li>Customise the Facebook widget for different colour schemes, show news stream and show fans faces.</li>
+<li>Change the colour of the accordion, gray, blue, red, green and black.</li>
+<li>Two different icons sets: colour and grey.</li>
+<li>Select accordion section to open on page load.</li>
+<li>Ability to make the accordion all collapsible and load with all section closed.</li>
+<li>Choose which accordion section to display on each widget.</li>
+<li>Skeleton styling to enable easy custom styling.</li>
+<li>Ability to manually load jQuery to increase compatability.</li>
+<li>Troubleshooting section to ensure any problems are resolved quickly.</li>
+<li>Support requests answered in less and 24 hours on average.</li>
+</ul>
+
+<h3>Like this plugin?</h3> 
+Please have a look at our other plugin <a href="http://wordpress.org/plugins/business-contact-widget/" target="_blank">Business Contact Widget</a> which displays all your contact details in a clear and elegant way.
+
 
 == Installation ==
 
@@ -43,13 +66,21 @@ Yes, just do not enter any information for that social media channel and that se
 == Screenshots ==
 
 1. Widget front end - overview.
-2. Widget front end - colour on hover.
-3. Widget front end - display Twitter stream.
-4. Widget front end - display LinkedIn badge, resizing to view entire badge.
+2. Widget front end - display Facebook business profile.
+3. Widget front end - social stream colour on hover.
+4. Widget front end - LinkedIn widget pops out of accordion to fully display.
 5. Widget backend - details of widget.
-6. Widget backend - Only need to enter usernames on each channel to embed the badge.
+6. Widget backend - display which social channels to display.
+7. Settings backend - easily add the different social channels.
+8. Settings backend - customise the styling options.
 
 == Changelog ==
+
+= 2.6.1 =
+* New settings page
+* Grey or colour icons
+* Skeleton styling
+* Defined CSS scopes in styles
 
 = 2.6.0 =
 * Larger space between boxes
@@ -87,5 +118,5 @@ Yes, just do not enter any information for that social media channel and that se
 
 == Upgrade Notice ==
 
-= 2.4 =
-Pinterest, Facebook badges, LinkedIn Profiles Added. New Twitter widget enabled.
+= 2.6.1 =
+New admin area and minify versions of scripts and styles.
