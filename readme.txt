@@ -4,7 +4,7 @@ Donate link: http://stressfreesites.co.uk/plugins
 Tags: social media, badge, widget, facebook, twitter, linked in, you tube
 Requires at least: 3.0.0
 Tested up to: 3.8
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,6 @@ The plugin includes a plugin admin page where it is possible to customise everyt
 
 <h3>Like this plugin?</h3> 
 Please have a look at our other plugin <a href="http://wordpress.org/plugins/business-contact-widget/" target="_blank">Business Contact Widget</a> which displays all your contact details in a clear and elegant way.
-
 
 == Installation ==
 
@@ -75,6 +74,9 @@ Yes, just do not enter any information for that social media channel and that se
 8. Settings backend - customise the styling options.
 
 == Changelog ==
+
+= 2.6.2 =
+* Minor bugs
 
 = 2.6.1 =
 * New settings page
@@ -118,5 +120,5 @@ Yes, just do not enter any information for that social media channel and that se
 
 == Upgrade Notice ==
 
-= 2.6.1 =
-New admin area and minify versions of scripts and styles.
+= 2.6.2 =
+Minor bug fixes.
