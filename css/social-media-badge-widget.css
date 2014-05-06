@@ -98,6 +98,9 @@
 }
 
 .social-media-badge .ui-accordion .ui-accordion-header:hover a,
+#header .social-media-badge .ui-accordion .ui-accordion-header:hover a,
+#sidebar .social-media-badge .ui-accordion .ui-accordion-header:hover a,
+#footer .social-media-badge .ui-accordion .ui-accordion-header:hover a,
 .social-media-badge .ui-accordion .ui-accordion-header-active a {
     text-decoration: none;
     color: #eee;

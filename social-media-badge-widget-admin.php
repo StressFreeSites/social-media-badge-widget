@@ -49,7 +49,7 @@ function smbw_settings_init() {
     if ( empty( $settings ) ) {
             $settings = array(
                           'twitter' => '', 'facebook' => '', 'facebook_badge' => '', 'googleplus' => '', 'googleplus_profile' => '', 'linkedin' => '', 'linkedin_profile' => '', 'youtube' => '', 'pinterest' => '', 'flickr' => '',
-                          'colour_scheme_twitter' => 'light', 'replies_facebook' => 'false', 'colour_scheme_facebook' => 'light', 'faces_facebook' => 'false', 'stream_facebook' => 'true', 'side_linkedin' => 'left',
+                          'colour_scheme_twitter' => 'light', 'replies_twitter' => 'false', 'replies_facebook' => 'false', 'colour_scheme_facebook' => 'light', 'faces_facebook' => 'false', 'stream_facebook' => 'true', 'side_linkedin' => 'left',
                           'openSelection' => '1', 'collapsible' => 'true', 'allClosed' => 'true', 'style' => 'Skeleton', 'icons' => 'Colours', 'createdBy' => 'true',
                           'loadJqueryUI' => 'true', 'loadScripts' => array('jQuery' => 'true',  'jQuery-ui-core' => 'true', 'jQuery-ui-accordion' => 'true')
                             );

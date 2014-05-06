@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.6.4
+Version: 2.6.5
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 Text Domain: smbw
@@ -131,22 +131,23 @@ function smbw_activate() {
     $widget = get_option('widget_social-media-badge-widget','');
 
     // Retrieve new settings information
-    smbw_settings_init();
     $settings = get_option('smbw_settings');
 
-    if($widget != '' && isset($widget[3])){
-        $settings['twitter'] = $widget[3]['twitter'];
-        $settings['facebook'] = $widget[3]['facebook'];
-        $settings['facebook_badge'] = $widget[3]['facebook_badge'];
-        $settings['googleplus'] = $widget[3]['googleplus'];
-        $settings['googleplus_profile'] = $widget[3]['googleplus_profile'];
-        $settings['linkedin'] = $widget[3]['linkedin'];
-        $settings['linkedin_profile'] = $widget[3]['linkedin_profile'];            
-        $settings['youtube'] = $widget[3]['youtube'];
-        $settings['pinterest'] = $widget[3]['pinterest'];
-        $settings['flickr'] = $widget[3]['flickr'];
+    if($widget != '' && isset($widget[1])){
+        smbw_settings_init();
+        
+        $settings['twitter'] = $widget[1]['twitter'];
+        $settings['facebook'] = $widget[1]['facebook'];
+        $settings['facebook_badge'] = $widget[1]['facebook_badge'];
+        $settings['googleplus'] = $widget[1]['googleplus'];
+        $settings['googleplus_profile'] = $widget[1]['googleplus_profile'];
+        $settings['linkedin'] = $widget[1]['linkedin'];
+        $settings['linkedin_profile'] = $widget[1]['linkedin_profile'];            
+        $settings['youtube'] = $widget[1]['youtube'];
+        $settings['pinterest'] = $widget[1]['pinterest'];
+        $settings['flickr'] = $widget[1]['flickr'];
 
-        $settings['createdBy'] = $widget[3]['createdBy'];
+        $settings['createdBy'] = $widget[1]['createdBy'];
     
         $settings['openSelection'] = get_option('smbw_openSelection');
         $settings['collapsible'] = get_option('smbw_collapsible');
@@ -159,23 +160,23 @@ function smbw_activate() {
         $settings['stream_facebook'] = get_option('smbw_stream_facebook');
         $settings['tweets'] = get_option('smbw_tweets');
         $settings['live_twitter'] = get_option('smbw_live_twitter');
+        
+        // Delete old settings
+        delete_option('widget_social-media-badge-widget');
+        delete_option('smbw_openSelection');
+        delete_option('smbw_collapsible');
+        delete_option('smbw_allClosed');
+        delete_option('smbw_load_jquery_ui');
+        delete_option('smbw_load_scripts');
+        delete_option('smbw_style');
+        delete_option('smbw_faces_facebook');
+        delete_option('smbw_stream_facebook');
+        delete_option('smbw_tweets');
+        delete_option('smbw_live_twitter');  
     }
     
     // Save settings in new format
     update_option('smbw_settings', $settings);
-
-    // Delete old settings
-    delete_option('widget_social-media-badge-widget');
-    delete_option('smbw_openSelection');
-    delete_option('smbw_collapsible');
-    delete_option('smbw_allClosed');
-    delete_option('smbw_load_jquery_ui');
-    delete_option('smbw_load_scripts');
-    delete_option('smbw_style');
-    delete_option('smbw_faces_facebook');
-    delete_option('smbw_stream_facebook');
-    delete_option('smbw_tweets');
-    delete_option('smbw_live_twitter');  
 }
 register_activation_hook( __FILE__, 'smbw_activate' );
   
