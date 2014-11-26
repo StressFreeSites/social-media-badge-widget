@@ -4,7 +4,7 @@ Donate link: http://stressfreesites.co.uk/plugins
 Tags: social media, badge, widget, facebook, twitter, linked in, you tube
 Requires at least: 3.0.0
 Tested up to: 3.9
-Stable tag: 2.6.6
+Stable tag: 2.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ Yes, just do not enter any information for that social media channel and that se
 
 == Changelog ==
 
+= 2.6.7 =
+* Links to develop and report bugs using GitHub
+
 = 2.6.6 =
 * Update screenshots
 
@@ -132,5 +135,5 @@ Yes, just do not enter any information for that social media channel and that se
 
 == Upgrade Notice ==
 
-= 2.6.6 =
-* Update screenshots
+= 2.6.7 =
+* Join in the development of the plugin using GitHub

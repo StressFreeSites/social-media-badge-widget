@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.6.6
+Version: 2.6.7
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 Text Domain: smbw
@@ -335,13 +335,15 @@ class Social_Media_Badge_Widget extends WP_Widget {
         if ($instance['showLinkedIn'] && ($linkedin || $linkedin_profile)){
             echo ('<h3 class="linkedin ' . $icons . '"><a href="#">' . __('LinkedIn', 'smbw') . '</a></h3><div class="linkedin-content ' . $side_linkedin . '"><div style="width:364px">');
             
+            if ($linkedin || $linkedin_profile){
+                echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>');
+            }
+            
             if ($linkedin){
-                echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-                    <script type="IN/CompanyProfile" data-id="'.$linkedin.'" data-format="inline"></script>');
+                echo ('<script type="IN/CompanyProfile" data-id="'.$linkedin.'" data-format="inline"></script>');
             }
             if($linkedin_profile){
-                echo ('<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-                        <script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/'.$linkedin_profile.'" data-format="inline"></script>');
+                echo ('<script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/'.$linkedin_profile.'" data-format="inline"></script>');
             }
             echo ('</div></div>');
         }
