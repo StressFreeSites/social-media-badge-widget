@@ -231,246 +231,272 @@ function smbw_display_settings_page() {
 
     ?>
     <div class="wrap">
-        <div class="created-by">
-            <?php _e('Plugin created by', 'smbw'); ?><br/><a href="http://stressfreesites.co.uk/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/stressfreesites.png')); ?>" /></a>
-        </div>
-        <div id="icon-options-general" class="icon32"><br /></div>
-        <h2>
-            <?php _e('Social Media Badge Widget', 'smbw') ?>
-        </h2>
-        <div class="links">
-            <a href="http://stressfreesites.co.uk/development/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/home_small.jpg')); ?>" /></a>
-            <a href="http://facebook.com/stressfreesites" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/facebook_small.jpg')); ?>" /></a>
-            <a href="http://twitter.com/stressfreesites" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/twitter_small.jpg')); ?>" /></a>
-            <a href="http://stressfreesites.co.uk/forums" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/support_small.jpg')); ?>" /></a>
-        </div>       	
-        <?php
+        <div id="smbw-header">
+            <div class="box">
+                <?php _e('Plugin created by', 'smbw'); ?><br/><a href="http://stressfreesites.co.uk/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/stressfreesites.png')); ?>" /></a>
+            </div><!-- box -->
+            <div id="icon-options-general" class="icon32"><br /></div>
+            <h2>
+                <?php _e('Social Media Badge Widget', 'smbw') ?>
+            </h2>
+            <div class="links">
+                <a href="http://stressfreesites.co.uk/development/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/home_small.jpg')); ?>" /></a>
+                <a href="http://facebook.com/stressfreesites" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/facebook_small.jpg')); ?>" /></a>
+                <a href="http://twitter.com/stressfreesites" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/twitter_small.jpg')); ?>" /></a>
+                <a href="http://stressfreesites.co.uk/forums" target="_blank"><img src="<?php echo(plugins_url('social-media-badge-widget/images/support_small.jpg')); ?>" /></a>
+            </div><!-- links -->
+        </div><!-- smbw-header --> 
+        <div id="smbw-content">
+            <?php
 
-        if (!isset($_GET['tab'])){
-             $_GET['tab'] = SMBW_DEFAULT_TAB;
-        }
-        smbw_display_settings_tabs($_GET['tab']);
-        
-        ?>
-        <div id="poststuff">
-            <form method="post" action="<?php admin_url('options-general.php?page=social-media-badge-widget'); ?>">
-                    <?php
-                    wp_nonce_field('smbw-settings-page'); 
+            if (!isset($_GET['tab'])){
+                 $_GET['tab'] = SMBW_DEFAULT_TAB;
+            }
+            smbw_display_settings_tabs($_GET['tab']);
 
-                    if ($pagenow == 'options-general.php' && $_GET['page'] == 'social-media-badge-widget'){ 
-                            
-                            $tab = $_GET['tab']; 
-
-                            echo '<table class="form-table">';
-                            switch($tab) {
-                                    case 'social-media-settings':
-                                        echo '<h2 class="smbw-admin-title">' . __('Social Media Settings', 'smbw') . '</h2>';
-                                        ?>
-                                        <div id="accordion">
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/twitter.png')); ?>" class="icon" alt="Twitter"/><?php _e('Twitter Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_twitter"><?php _e('Twitter','smbw'); ?></label><input id="smbw_twitter" name="smbw_twitter" value="<?php echo $settings['twitter']; ?>" />
-                                                <div class="clear"></div> 
-                                                <p class="description"> <?php _e('Insert without the \'@\'', 'smbw'); ?></p>                                           
-                                                <label for="smbw_colour_scheme_twitter"><?php _e('Colour scheme', 'smbw'); ?></label> 
-                                                <select name="smbw_colour_scheme_twitter"> 
-                                                        <option <?php if($settings['colour_scheme_twitter'] == 'light') echo ('SELECTED');?> value="light">Light</option>
-                                                        <option <?php if($settings['colour_scheme_twitter'] == 'dark') echo ('SELECTED');?> value="dark">Dark</option>
-                                                </select>
-                                                <div class="clear"></div>
-                                                <label for="smbw_replies_twitter"><?php _e('Show Replies?','smbw'); ?></label>          
-                                                <input class="checkbox" type="checkbox" id="smbw_replies_twitter" name="smbw_replies_twitter" <?php checked($settings['replies_twitter'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, replies will be shown in the Twitter widget.', 'smbw'); ?></p> 
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/facebook.png')); ?>" class="icon" alt="Facebook"/><?php _e('Facebook Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_facebook"><?php _e('Facebook','smbw'); ?></label><input id="smbw_facebook" name="smbw_facebook" value="<?php echo $settings['facebook']; ?>" />
-                                                <div class="clear"></div>
-                                                <p class="description"><?php _e('Insert the business page URL (the part at the end, after facebook.com/)', 'smbw'); ?></p>           
-                                                <label for="smbw_colour_scheme_facebook"><?php _e('Colour scheme', 'smbw'); ?></label> 
-                                                <select name="smbw_colour_scheme_facebook"> 
-                                                        <option <?php if($settings['colour_scheme_facebook'] == 'light') echo ('SELECTED');?> value="light">Light</option>
-                                                        <option <?php if($settings['colour_scheme_facebook'] == 'dark') echo ('SELECTED');?> value="dark">Dark</option>
-                                                </select>
-                                                <div class="clear"></div>
-                                                <label for="smbw_stream_facebook"><?php _e('Show Stream?','smbw'); ?></label>          
-                                                <input class="checkbox" type="checkbox" id="smbw_stream_facebook" name="smbw_stream_facebook" <?php checked($settings['stream_facebook'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, the newsfeed from the Facebook business page will be shown.', 'smbw'); ?></p> 
-                                                <div class="clear"></div>
-                                                <label for="smbw_faces_facebook"><?php _e('Show Faces?', 'smbw'); ?></label>
-                                                <input class="checkbox" type="checkbox" id="smbw_faces_facebook" name="smbw_faces_facebook" <?php checked($settings['faces_facebook'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, faces of some of the fans of the Facebook business page will be displayed.', 'smbw'); ?></label><br />           
-                                                <div class="clear"></div>
-                                                <label for="smbw_facebook_badge"><?php _e('Facebook Badge','smbw'); ?></label><textarea id="smbw_facebook_badge" name="smbw_facebook_badge"><?php echo esc_html_e(stripslashes($settings['facebook_badge'])); ?></textarea>
-                                                <div class="clear"></div> 
-                                                <p class="description"><?php _e('Create a badge ', 'smbw');?><a href="http://facebook.com/badges" target="_blank"><?php _e('here', 'smbw'); ?></a><?php _e(' then press \'other\' to see code. Finally, copy the code into box above.', 'smbw'); ?></p>
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/googleplus.png')); ?>" class="icon" alt="Google+"/><?php _e('Google+ Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_googleplus"><?php _e('Google+','smbw'); ?></label><input id="smbw_googleplus" name="smbw_googleplus" value="<?php echo $settings['googleplus']; ?>" />
-                                                <div class="clear"></div>                                          
-                                                <p class="description"><?php _e('Insert ID for page, this is the number in the URL when viewing your Google+ page.', 'smbw'); ?></p>
-                                                <label for="smbw_googleplus_profile"><?php _e('Google+ Profile','smbw'); ?></label><input id="smbw_googleplus_profile" name="smbw_googleplus_profile" value="<?php echo $settings['googleplus_profile']; ?>" />
-                                                <div class="clear"></div>   
-                                                <p class="description"><?php _e('Insert ID profile, this is the number in the URL when viewing your Google+ profile.', 'smbw'); ?></p>
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/linkedin.png')); ?>" class="icon" alt="LinkedIn"/><?php _e('LinkedIn Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_linkedin"><?php _e('LinkedIn','smbw'); ?></label><input id="smbw_linkedin" name="smbw_linkedin" value="<?php echo $settings['linkedin']; ?>" />
-                                                <div class="clear"></div>  
-                                                <p class="description"><?php _e('Insert company ID, get ID ', 'smbw'); ?><a href="https://developer.linkedin.com/plugins/company-profile-plugin" target="_blank"><?php _e('here ', 'smbw'); ?></a><?php _e(' by typing in your company name then press get code. Finally, find the ID in the code.', 'smbw'); ?></p>		
-                                                <label for="smbw_linkedin_profile"><?php _e('LinkedIn Profile','smbw'); ?></label><input id="smbw_linkedin_profile" name="smbw_linkedin_profile" value="<?php echo $settings['linkedin_profile']; ?>" />
-                                                <div class="clear"></div>  
-                                                <p class="description"><?php _e('Insert public profile URL, after the linkedin.com/in/', 'smbw'); ?></p>
-                                                <label for="smbw_side_linkedin"><?php _e('Popout side', 'smbw'); ?></label> 
-                                                <select name="smbw_side_linkedin"> 
-                                                        <option <?php if($settings['side_linkedin'] == 'left') echo ('SELECTED');?> value="left">Left</option>
-                                                        <option <?php if($settings['side_linkedin'] == 'right') echo ('SELECTED');?> value="right">Right</option>
-                                                </select>
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/youtube.png')); ?>" class="icon" alt="You Tube"/><?php _e('You Tube Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_youtube"><?php _e('You Tube','smbw'); ?></label><input id="smbw_youtube" name="smbw_youtube" value="<?php echo $settings['youtube']; ?>" />
-                                                <div class="clear"></div> 
-                                                <p class="description"><?php _e('Insert the channel URL, part after the youtube.com/', 'smbw'); ?></p>
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/pinterest.png')); ?>" class="icon" alt="Pinterest"/><?php _e('Pinterest Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_pinterest"><?php _e('Pinterest','smbw'); ?></label><input id="smbw_pinterest" name="smbw_pinterest" value="<?php echo $settings['pinterest']; ?>" />
-                                                <div class="clear"></div>  
-                                                <p class="description"><?php _e('Insert username, as it appears in URL after pinterest.com/', 'smbw'); ?></p>	
-                                            </div>
-                                            <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/flickr.png')); ?>" class="icon" alt="Flickr"/><?php _e('Flickr Settings', 'smbw'); ?></h3>
-                                            <div>
-                                                <label for="smbw_flickr"><?php _e('Flickr','smbw'); ?></label><input id="smbw_flickr" name="smbw_flickr" value="<?php echo $settings['flickr']; ?>" />
-                                                <div class="clear"></div> 
-                                                <p class="description"><?php _e('Insert user ID including the bit after the \'@\'', 'smbw'); ?></p>
-                                            </div>
-                                        </div><!-- accordion -->
-                                        <?php                                       
-                                        break; 
-                                    case 'style-settings': 
-                                        echo '<h2 class="smbw-admin-title">' . __('Style Settings', 'smbw') . '</h2>'; 
-                                        ?>
-                                        <tbody>
-                                            <tr valign="top">
-                                              <th scope="row">
-                                                <label for="smbw_style"><?php _e('Widget Style','smbw'); ?></label>
-                                              </th>
-                                              <td>
-                                                <select name="smbw_style"> 
-                                                    <option <?php if($settings['style'] == 'Grey') echo ('SELECTED');?>>Grey</option>
-                                                    <option <?php if($settings['style'] == 'Black') echo ('SELECTED');?>>Black</option>
-                                                    <option <?php if($settings['style'] == 'Blue') echo ('SELECTED');?>>Blue</option>
-                                                    <option <?php if($settings['style'] == 'Red') echo ('SELECTED');?>>Red</option>
-                                                    <option <?php if($settings['style'] == 'Green') echo ('SELECTED');?>>Green</option>
-                                                    <option <?php if($settings['style'] == 'Skeleton') echo ('SELECTED');?>>Skeleton</option>
-                                                 </select><p class="description"><?php _e('Change the widget style to match your website - Skeleton will display minimal styling.', 'smbw'); ?></p>
-                                               </td>               
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row">
-                                                    <label for="smbw_icons"><?php _e('Icon Set','smbw'); ?></label>
-                                                </th>
-                                                <td>
-                                                    <select name="smbw_icons"> 
-                                                        <option <?php if($settings['icons'] == 'Colours') echo ('SELECTED');?>>Colours</option>
-                                                        <option <?php if($settings['icons'] == 'Grey') echo ('SELECTED');?>>Grey</option>
-                                                    </select><p class="description"><?php _e('Change which icon set to use.', 'smbw'); ?></p> 
-                                                </td>
-                                            </tr> 
-                                            <tr valign="top">
-                                              <th scope="row">
-                                                <label for="smbw_openSelection"><?php _e('Load page open on section','smbw'); ?></label>
-                                              </th>
-                                              <td>
-                                                <select name="smbw_openSelection"> 
-                                                    <option <?php if($settings['openSelection'] == 1) echo ('SELECTED');?>>1</option>
-                                                    <option <?php if($settings['openSelection'] == 2) echo ('SELECTED');?>>2</option>
-                                                    <option <?php if($settings['openSelection'] == 3) echo ('SELECTED');?>>3</option>
-                                                    <option <?php if($settings['openSelection'] == 4) echo ('SELECTED');?>>4</option>
-                                                    <option <?php if($settings['openSelection'] == 5) echo ('SELECTED');?>>5</option>            
-                                                 </select><p class="description"><?php _e('Opens on section number - 1 for first section, 2 for second section etc.', 'smbw'); ?></p>
-                                               </td>               
-                                            </tr>
-                                            <tr valign="top">
-                                              <th scope="row">
-                                                  <?php _e('All collapsible?','smdw'); ?>
-                                              </th>
-                                              <td>
-                                                <input class="checkbox" type="checkbox" id="smbw_collapsible" name="smbw_collapsible" <?php checked($settings['collapsible'], 'true'); ?> value="true" />
-                                                <label for="smbw_collapsible"><?php _e('If ticked, all sections can be closed at the same time.', 'smbw'); ?></label>
-                                              </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row">
-                                                    <?php _e('Load page with all sections closed', 'smbw'); ?>
-                                                </th>
-                                                <td>
-                                                    <input class="checkbox" type="checkbox" id="smbw_allClosed" name="smbw_allClosed" <?php checked($settings['allClosed'], 'true'); ?>  value="true"/>
-                                                    <label for="smbw_allClosed"><?php _e('If ticked, the page will load with all sections closed.','smbw');?></label>
-                                                    <p class="description"><?php _e('<strong>NOTE:</strong> all collapsible has to be ticked for this to work.', 'smbw'); ?></p>
-                                                </td>
-                                            </tr>
-                                            <tr valign="top">
-                                                <th scope="row">
-                                                    <?php _e('Display Created By','smbw'); ?>
-                                                </th>
-                                                <td>
-                                                    <input class="checkbox" type="checkbox" id="smbw_createdBy" name="smbw_createdBy" value="true" <?php checked($settings['createdBy'], 'true'); ?> />
-                                                    <label for="smbw_createdBy"><?php _e('Please only remove this after making a ', 'smbw'); ?><a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><?php _e('donation', 'smbw'); ?></a>, <?php _e('so we can continue making plugins like these.', 'smbw'); ?></label>
-                                                </td>
-                                            </tr>
-                                        </tbody>    
-                                        <?php
-                                        break;
-                                    case 'system-settings': 
-                                        echo '<h2 class="smbw-admin-title">' . __('System Settings', 'smbw') . '</h2>'; 
-                                        ?>
-                                        <tbody>
-                                           <tr valign="top">
-                                              <th scope="row">
-                                                  <?php _e('Load jQuery UI styling', 'smbw'); ?>
-                                              </th>
-                                              <td>
-                                                  <input class="checkbox" type="checkbox" id="smbw_loadJqueryUi" name="smbw_loadJqueryUI" <?php checked($settings['loadJqueryUI'], 'true'); ?> value="true" />
-                                                  <label for="smbw_loadJqueryUI"><?php _e('If another plugin or your theme already has jQuery UI loaded (incorrectly) then untick this to stop the plugin\'s styling overriding and interferaring. NOTE: this will make many of the styling option redundant.', 'smbw'); ?></label><br />           
-                                              </td>               
-                                           </tr>
-                                           <tr valign="top">
-                                              <th scope="row">
-                                                  <?php _e('Load jQuery and jQuery UI scripts', 'smbw'); ?>
-                                              </th>
-                                              <td>                  
-                                                  <input type="checkbox" name="smbw_loadScripts[jQuery]" value="true" <?php checked($settings['loadScripts']['jQuery'], 'true'); ?> />
-                                                  <label for="smbw_loadScripts[jQuery]">jQuery</label><br/>
-                                                  <input type="checkbox" name="smbw_loadScripts[jQuery-ui-core]" value="true" <?php checked($settings['loadScripts']['jQuery-ui-core'], 'true'); ?> />
-                                                  <label for="smbw_loadScripts[jQuery-ui-core]">jQuery-UI-Core</label><br/>
-                                                  <input type="checkbox" name="smbw_loadScripts[jQuery-ui-accordion]" value="true" <?php checked($settings['loadScripts']['jQuery-ui-accordion'], 'true'); ?> />
-                                                  <label for="smbw_loadScripts[jQuery-ui-accordion]">jQuery-UI-Accordion</label><br/>
-                                                  <p class="description"><?php _e('If another plugin or your theme already has jQuery, jQuery UI or jQuery UI Accordion loaded (incorrectly) then untick the corresponding script to stop the plugin\'s loading it twice causing it not to work.', 'smbw'); ?></p>           
-                                              </td>               
-                                           </tr>
-                                        </tbody>
-                                        <?php
-                                        break;
-                                    case 'troubleshooting': 
-                                        echo '<h2 class="smbw-admin-title">' . __('Troubleshooting', 'smbw') . '</h2>';
-                                        echo '<p><span>' . __('If the widget does not display correctly', 'smbw-languaage') . '</span><p>';
-                                        echo '<p class="description">' . __('If this happen it means that you have a theme or plugin which loads jQuery or jQuery UI incorrectly. To resolve this untick the options jQuery, jQuery UI and jQuery UI Accordion. See if that makes the widget display correctly. If it doesn\'t try ticking jQuery UI Accordion, then checking, then ticking jQuery UI and so on.' , 'smbw') . '</p>';           
-                                        echo '<hr />';
-                                        echo '<p><span>' . __('If the widget interferes with the styling of other areas of your website', 'smbw') . '</span><p>';
-                                        echo '<p class="description">' . __('If this happens you do not need the default styling of the widet. To resolve this untick the styling option load jQuery UI styling.' , 'smbw') .'</p>';   
-                                        break;
-                            }
-                            echo '</table>';
-                    }
-                    if($tab != 'troubleshooting'){
-                        ?>
-                        <input type="submit" name="Submit"  class="button-primary" value="Update Settings" />
+            ?>
+            <div id="poststuff">
+                <form method="post" action="<?php admin_url('options-general.php?page=social-media-badge-widget'); ?>">
                         <?php
-                    }
-                    ?>
-            </form>
-            <hr />
-            <div class="donate">
+                        wp_nonce_field('smbw-settings-page'); 
+
+                        if ($pagenow == 'options-general.php' && $_GET['page'] == 'social-media-badge-widget'){ 
+
+                                $tab = $_GET['tab']; 
+
+                                echo '<table class="form-table">';
+                                switch($tab) {
+                                        case 'social-media-settings':
+                                            echo '<h2 class="smbw-admin-title">' . __('Social Media Settings', 'smbw') . '</h2>';
+                                            ?>
+                                            <div id="accordion">
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/twitter.png')); ?>" class="icon" alt="Twitter"/><?php _e('Twitter Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_twitter"><?php _e('Twitter','smbw'); ?></label><input id="smbw_twitter" name="smbw_twitter" value="<?php echo $settings['twitter']; ?>" />
+                                                    <div class="clear"></div> 
+                                                    <p class="description"> <?php _e('Insert without the \'@\'', 'smbw'); ?></p>                                           
+                                                    <label for="smbw_colour_scheme_twitter"><?php _e('Colour scheme', 'smbw'); ?></label> 
+                                                    <select name="smbw_colour_scheme_twitter"> 
+                                                            <option <?php if($settings['colour_scheme_twitter'] == 'light') echo ('SELECTED');?> value="light">Light</option>
+                                                            <option <?php if($settings['colour_scheme_twitter'] == 'dark') echo ('SELECTED');?> value="dark">Dark</option>
+                                                    </select>
+                                                    <div class="clear"></div>
+                                                    <label for="smbw_replies_twitter"><?php _e('Show Replies?','smbw'); ?></label>          
+                                                    <input class="checkbox" type="checkbox" id="smbw_replies_twitter" name="smbw_replies_twitter" <?php checked($settings['replies_twitter'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, replies will be shown in the Twitter widget.', 'smbw'); ?></p> 
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/facebook.png')); ?>" class="icon" alt="Facebook"/><?php _e('Facebook Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_facebook"><?php _e('Facebook','smbw'); ?></label><input id="smbw_facebook" name="smbw_facebook" value="<?php echo $settings['facebook']; ?>" />
+                                                    <div class="clear"></div>
+                                                    <p class="description"><?php _e('Insert the business page URL (the part at the end, after facebook.com/)', 'smbw'); ?></p>           
+                                                    <label for="smbw_colour_scheme_facebook"><?php _e('Colour scheme', 'smbw'); ?></label> 
+                                                    <select name="smbw_colour_scheme_facebook"> 
+                                                            <option <?php if($settings['colour_scheme_facebook'] == 'light') echo ('SELECTED');?> value="light">Light</option>
+                                                            <option <?php if($settings['colour_scheme_facebook'] == 'dark') echo ('SELECTED');?> value="dark">Dark</option>
+                                                    </select>
+                                                    <div class="clear"></div>
+                                                    <label for="smbw_stream_facebook"><?php _e('Show Stream?','smbw'); ?></label>          
+                                                    <input class="checkbox" type="checkbox" id="smbw_stream_facebook" name="smbw_stream_facebook" <?php checked($settings['stream_facebook'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, the newsfeed from the Facebook business page will be shown.', 'smbw'); ?></p> 
+                                                    <div class="clear"></div>
+                                                    <label for="smbw_faces_facebook"><?php _e('Show Faces?', 'smbw'); ?></label>
+                                                    <input class="checkbox" type="checkbox" id="smbw_faces_facebook" name="smbw_faces_facebook" <?php checked($settings['faces_facebook'], 'true'); ?> value="true" /><p class="label"><?php _e('If ticked, faces of some of the fans of the Facebook business page will be displayed.', 'smbw'); ?></label><br />           
+                                                    <div class="clear"></div>
+                                                    <label for="smbw_facebook_badge"><?php _e('Facebook Badge','smbw'); ?></label><textarea id="smbw_facebook_badge" name="smbw_facebook_badge"><?php echo esc_html_e(stripslashes($settings['facebook_badge'])); ?></textarea>
+                                                    <div class="clear"></div> 
+                                                    <p class="description"><?php _e('Create a badge ', 'smbw');?><a href="http://facebook.com/badges" target="_blank"><?php _e('here', 'smbw'); ?></a><?php _e(' then press \'other\' to see code. Finally, copy the code into box above.', 'smbw'); ?></p>
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/googleplus.png')); ?>" class="icon" alt="Google+"/><?php _e('Google+ Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_googleplus"><?php _e('Google+','smbw'); ?></label><input id="smbw_googleplus" name="smbw_googleplus" value="<?php echo $settings['googleplus']; ?>" />
+                                                    <div class="clear"></div>                                          
+                                                    <p class="description"><?php _e('Insert ID for page, this is the number in the URL when viewing your Google+ page.', 'smbw'); ?></p>
+                                                    <label for="smbw_googleplus_profile"><?php _e('Google+ Profile','smbw'); ?></label><input id="smbw_googleplus_profile" name="smbw_googleplus_profile" value="<?php echo $settings['googleplus_profile']; ?>" />
+                                                    <div class="clear"></div>   
+                                                    <p class="description"><?php _e('Insert ID profile, this is the number in the URL when viewing your Google+ profile.', 'smbw'); ?></p>
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/linkedin.png')); ?>" class="icon" alt="LinkedIn"/><?php _e('LinkedIn Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_linkedin"><?php _e('LinkedIn','smbw'); ?></label><input id="smbw_linkedin" name="smbw_linkedin" value="<?php echo $settings['linkedin']; ?>" />
+                                                    <div class="clear"></div>  
+                                                    <p class="description"><?php _e('Insert company ID, get ID ', 'smbw'); ?><a href="https://developer.linkedin.com/plugins/company-profile-plugin" target="_blank"><?php _e('here ', 'smbw'); ?></a><?php _e(' by typing in your company name then press get code. Finally, find the ID in the code.', 'smbw'); ?></p>		
+                                                    <label for="smbw_linkedin_profile"><?php _e('LinkedIn Profile','smbw'); ?></label><input id="smbw_linkedin_profile" name="smbw_linkedin_profile" value="<?php echo $settings['linkedin_profile']; ?>" />
+                                                    <div class="clear"></div>  
+                                                    <p class="description"><?php _e('Insert public profile URL, after the linkedin.com/in/', 'smbw'); ?></p>
+                                                    <label for="smbw_side_linkedin"><?php _e('Popout side', 'smbw'); ?></label> 
+                                                    <select name="smbw_side_linkedin"> 
+                                                            <option <?php if($settings['side_linkedin'] == 'left') echo ('SELECTED');?> value="left">Left</option>
+                                                            <option <?php if($settings['side_linkedin'] == 'right') echo ('SELECTED');?> value="right">Right</option>
+                                                    </select>
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/youtube.png')); ?>" class="icon" alt="You Tube"/><?php _e('You Tube Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_youtube"><?php _e('You Tube','smbw'); ?></label><input id="smbw_youtube" name="smbw_youtube" value="<?php echo $settings['youtube']; ?>" />
+                                                    <div class="clear"></div> 
+                                                    <p class="description"><?php _e('Insert the channel URL, part after the youtube.com/', 'smbw'); ?></p>
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/pinterest.png')); ?>" class="icon" alt="Pinterest"/><?php _e('Pinterest Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_pinterest"><?php _e('Pinterest','smbw'); ?></label><input id="smbw_pinterest" name="smbw_pinterest" value="<?php echo $settings['pinterest']; ?>" />
+                                                    <div class="clear"></div>  
+                                                    <p class="description"><?php _e('Insert username, as it appears in URL after pinterest.com/', 'smbw'); ?></p>	
+                                                </div>
+                                                <h3 class="smbw-admin-title"><img src="<?php echo(plugins_url('/social-media-badge-widget/images/flickr.png')); ?>" class="icon" alt="Flickr"/><?php _e('Flickr Settings', 'smbw'); ?></h3>
+                                                <div>
+                                                    <label for="smbw_flickr"><?php _e('Flickr','smbw'); ?></label><input id="smbw_flickr" name="smbw_flickr" value="<?php echo $settings['flickr']; ?>" />
+                                                    <div class="clear"></div> 
+                                                    <p class="description"><?php _e('Insert user ID including the bit after the \'@\'', 'smbw'); ?></p>
+                                                </div>
+                                            </div><!-- accordion -->
+                                            <?php                                       
+                                            break; 
+                                        case 'style-settings': 
+                                            echo '<h2 class="smbw-admin-title">' . __('Style Settings', 'smbw') . '</h2>'; 
+                                            ?>
+                                            <tbody>
+                                                <tr valign="top">
+                                                  <th scope="row">
+                                                    <label for="smbw_style"><?php _e('Widget Style','smbw'); ?></label>
+                                                  </th>
+                                                  <td>
+                                                    <select name="smbw_style"> 
+                                                        <option <?php if($settings['style'] == 'Grey') echo ('SELECTED');?>>Grey</option>
+                                                        <option <?php if($settings['style'] == 'Black') echo ('SELECTED');?>>Black</option>
+                                                        <option <?php if($settings['style'] == 'Blue') echo ('SELECTED');?>>Blue</option>
+                                                        <option <?php if($settings['style'] == 'Red') echo ('SELECTED');?>>Red</option>
+                                                        <option <?php if($settings['style'] == 'Green') echo ('SELECTED');?>>Green</option>
+                                                        <option <?php if($settings['style'] == 'Skeleton') echo ('SELECTED');?>>Skeleton</option>
+                                                     </select><p class="description"><?php _e('Change the widget style to match your website - Skeleton will display minimal styling.', 'smbw'); ?></p>
+                                                   </td>               
+                                                </tr>
+                                                <tr valign="top">
+                                                    <th scope="row">
+                                                        <label for="smbw_icons"><?php _e('Icon Set','smbw'); ?></label>
+                                                    </th>
+                                                    <td>
+                                                        <select name="smbw_icons"> 
+                                                            <option <?php if($settings['icons'] == 'Colours') echo ('SELECTED');?>>Colours</option>
+                                                            <option <?php if($settings['icons'] == 'Grey') echo ('SELECTED');?>>Grey</option>
+                                                        </select><p class="description"><?php _e('Change which icon set to use.', 'smbw'); ?></p> 
+                                                    </td>
+                                                </tr> 
+                                                <tr valign="top">
+                                                  <th scope="row">
+                                                    <label for="smbw_openSelection"><?php _e('Load page open on section','smbw'); ?></label>
+                                                  </th>
+                                                  <td>
+                                                    <select name="smbw_openSelection"> 
+                                                        <option <?php if($settings['openSelection'] == 1) echo ('SELECTED');?>>1</option>
+                                                        <option <?php if($settings['openSelection'] == 2) echo ('SELECTED');?>>2</option>
+                                                        <option <?php if($settings['openSelection'] == 3) echo ('SELECTED');?>>3</option>
+                                                        <option <?php if($settings['openSelection'] == 4) echo ('SELECTED');?>>4</option>
+                                                        <option <?php if($settings['openSelection'] == 5) echo ('SELECTED');?>>5</option>            
+                                                     </select><p class="description"><?php _e('Opens on section number - 1 for first section, 2 for second section etc.', 'smbw'); ?></p>
+                                                   </td>               
+                                                </tr>
+                                                <tr valign="top">
+                                                  <th scope="row">
+                                                      <?php _e('All collapsible?','smdw'); ?>
+                                                  </th>
+                                                  <td>
+                                                    <input class="checkbox" type="checkbox" id="smbw_collapsible" name="smbw_collapsible" <?php checked($settings['collapsible'], 'true'); ?> value="true" />
+                                                    <label for="smbw_collapsible"><?php _e('If ticked, all sections can be closed at the same time.', 'smbw'); ?></label>
+                                                  </td>
+                                                </tr>
+                                                <tr valign="top">
+                                                    <th scope="row">
+                                                        <?php _e('Load page with all sections closed', 'smbw'); ?>
+                                                    </th>
+                                                    <td>
+                                                        <input class="checkbox" type="checkbox" id="smbw_allClosed" name="smbw_allClosed" <?php checked($settings['allClosed'], 'true'); ?>  value="true"/>
+                                                        <label for="smbw_allClosed"><?php _e('If ticked, the page will load with all sections closed.','smbw');?></label>
+                                                        <p class="description"><?php _e('<strong>NOTE:</strong> all collapsible has to be ticked for this to work.', 'smbw'); ?></p>
+                                                    </td>
+                                                </tr>
+                                                <tr valign="top">
+                                                    <th scope="row">
+                                                        <?php _e('Display Created By','smbw'); ?>
+                                                    </th>
+                                                    <td>
+                                                        <input class="checkbox" type="checkbox" id="smbw_createdBy" name="smbw_createdBy" value="true" <?php checked($settings['createdBy'], 'true'); ?> />
+                                                        <label for="smbw_createdBy"><?php _e('Please only remove this after making a ', 'smbw'); ?><a href="http://stressfreesites.co.uk/plugins/social-media-badge-widget/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank"><?php _e('donation', 'smbw'); ?></a>, <?php _e('so we can continue making plugins like these.', 'smbw'); ?></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>    
+                                            <?php
+                                            break;
+                                        case 'system-settings': 
+                                            echo '<h2 class="smbw-admin-title">' . __('System Settings', 'smbw') . '</h2>'; 
+                                            ?>
+                                            <tbody>
+                                               <tr valign="top">
+                                                  <th scope="row">
+                                                      <?php _e('Load jQuery UI styling', 'smbw'); ?>
+                                                  </th>
+                                                  <td>
+                                                      <input class="checkbox" type="checkbox" id="smbw_loadJqueryUi" name="smbw_loadJqueryUI" <?php checked($settings['loadJqueryUI'], 'true'); ?> value="true" />
+                                                      <label for="smbw_loadJqueryUI"><?php _e('If another plugin or your theme already has jQuery UI loaded (incorrectly) then untick this to stop the plugin\'s styling overriding and interferaring. NOTE: this will make many of the styling option redundant.', 'smbw'); ?></label><br />           
+                                                  </td>               
+                                               </tr>
+                                               <tr valign="top">
+                                                  <th scope="row">
+                                                      <?php _e('Load jQuery and jQuery UI scripts', 'smbw'); ?>
+                                                  </th>
+                                                  <td>                  
+                                                      <input type="checkbox" name="smbw_loadScripts[jQuery]" value="true" <?php checked($settings['loadScripts']['jQuery'], 'true'); ?> />
+                                                      <label for="smbw_loadScripts[jQuery]">jQuery</label><br/>
+                                                      <input type="checkbox" name="smbw_loadScripts[jQuery-ui-core]" value="true" <?php checked($settings['loadScripts']['jQuery-ui-core'], 'true'); ?> />
+                                                      <label for="smbw_loadScripts[jQuery-ui-core]">jQuery-UI-Core</label><br/>
+                                                      <input type="checkbox" name="smbw_loadScripts[jQuery-ui-accordion]" value="true" <?php checked($settings['loadScripts']['jQuery-ui-accordion'], 'true'); ?> />
+                                                      <label for="smbw_loadScripts[jQuery-ui-accordion]">jQuery-UI-Accordion</label><br/>
+                                                      <p class="description"><?php _e('If another plugin or your theme already has jQuery, jQuery UI or jQuery UI Accordion loaded (incorrectly) then untick the corresponding script to stop the plugin\'s loading it twice causing it not to work.', 'smbw'); ?></p>           
+                                                  </td>               
+                                               </tr>
+                                            </tbody>
+                                            <?php
+                                            break;
+                                        case 'troubleshooting': 
+                                            echo '<h2 class="smbw-admin-title">' . __('Troubleshooting', 'smbw') . '</h2>';
+                                            echo '<p><span>' . __('If the widget does not display correctly', 'smbw-languaage') . '</span><p>';
+                                            echo '<p class="description">' . __('If this happen it means that you have a theme or plugin which loads jQuery or jQuery UI incorrectly. To resolve this untick the options jQuery, jQuery UI and jQuery UI Accordion. See if that makes the widget display correctly. If it doesn\'t try ticking jQuery UI Accordion, then checking, then ticking jQuery UI and so on.' , 'smbw') . '</p>';           
+                                            echo '<hr />';
+                                            echo '<p><span>' . __('If the widget interferes with the styling of other areas of your website', 'smbw') . '</span><p>';
+                                            echo '<p class="description">' . __('If this happens you do not need the default styling of the widet. To resolve this untick the styling option load jQuery UI styling.' , 'smbw') .'</p>';   
+                                            break;
+                                }
+                                echo '</table>';
+                        }
+                        if($tab != 'troubleshooting'){
+                            ?>
+                            <input type="submit" name="Submit"  class="button-primary" value="Update Settings" />
+                            <?php
+                        }
+                        ?>
+                </form>
+                <hr />
+            </div><!-- poststuff -->
+        </div><!-- smbw-content -->
+        <div id="smbw-footer">
+            <div class="box">
+                <h3>Let others know about this plugin</h3>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="StressFreeSites" data-size="large" data-count="none" data-hashtags="wordpress">Tweet</a><br/>
+                <div class="fb-share-button" data-href="http://stressfreesites.co.uk/social-media-badge-widget/" data-width="75" data-type="button"></div>            
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div><!-- box -->   
+            <div class="box">
+                <img src="<?php echo(plugins_url('business-contact-widget/images/github.png')); ?>" width="50" />
+                <h3>Contribute to this plugin using GitHub</h3>
+                <p><strong>Create new features</strong>, fork this project on <a href="https://github.com/StressFreeSites/social-media-badge-widget" target="_blank">GitHub</a>.</p>
+                <p><strong>Report a bug</strong>, create an issue on <a href="https://github.com/StressFreeSites/social-media-badge-widget/issues" target="_blank">GitHub</a>.</p>
+            </div><!-- box -->
+            <div class="box">
                 <h3>Help us develop the plugin further</h3>
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -478,21 +504,9 @@ function smbw_display_settings_page() {
                     <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
                     <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
                 </form>
-            </div>
-            <h3>Let others know about this plugin</h3>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-via="StressFreeSites" data-size="large" data-count="none" data-hashtags="wordpress">Tweet</a><br/>
-            <div class="fb-share-button" data-href="http://stressfreesites.co.uk/social-media-badge-widget/" data-width="75" data-type="button"></div>            
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-        </div>
-    </div>
+            </div><!-- box -->
+        </div><!-- smbw-footer -->
+    </div><!-- wrap -->
 <?php
 }
 ?>
