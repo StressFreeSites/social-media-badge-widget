@@ -20,4 +20,14 @@ jQuery('document').ready(function($) {
             collapsible: true,
             heightStyle: "content"
     });
+    
+    var height = 0,
+        footerBoxes = $('#smbw-footer .box');
+    
+    $.each(footerBoxes, function (index, footerBox) {
+        if($(footerBox).height() > height) {
+            height = $(footerBox).height();
+        };
+    });
+    $('#smbw-footer .box').height(height);
 });

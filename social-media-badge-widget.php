@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.6.7
+Version: 2.6.8
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 Text Domain: smbw
@@ -217,7 +217,7 @@ class Social_Media_Badge_Widget extends WP_Widget {
         $control_ops = array('width' => 300, 'height' => 350, 'id_base' => 'social-media-badge-widget');
 
         /* Create the widget. */
-        $this->WP_Widget('social-media-badge-widget', 'Social Media Badge Widget', $widget_ops, $control_ops);
+        $this->__construct('social-media-badge-widget', 'Social Media Badge Widget', $widget_ops, $control_ops);
     }
     
     /* Displays widget on website */
@@ -423,12 +423,12 @@ class Social_Media_Badge_Widget extends WP_Widget {
         </p> 
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'smbw'); ?></label>
-            <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:90%;" />
+            <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
             <span class="description"><?php _e('The title of the widget, leave blank for no title.', 'smbw'); ?></span>
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', 'smbw'); ?></label>
-            <input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" value="<?php echo $instance['width']; ?>" style="width:90%;" />
+            <input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" value="<?php echo $instance['width']; ?>" style="width:100%;" />
             <span class="description"><?php _e('The number of pixels for the widget to take.', 'smbw'); ?></span>
         </p>
         <h3><?php _e('Section Display Options', 'smbw'); ?></h3>
