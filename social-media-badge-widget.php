@@ -3,7 +3,7 @@
 Plugin Name: Social Media Badge Widget
 Plugin URI: http://stressfreesites.co.uk/plugins/social-media-badge-widget
 Description: This plugin creates a widget which easily displays the social badge from the leading social media websites (Twitter, Facebook, LinkedIn and You Tube).
-Version: 2.6.8
+Version: 2.7.0
 Author: StressFree Sites
 Author URI: http://stressfreesites.co.uk
 Text Domain: smbw
@@ -185,27 +185,27 @@ function smbw_admin_styles() {
 }
    
 /* Message box */
-function smbw_theme_admin_notice() {
+function smbw_plugin_admin_notice() {
     global $current_user ;
     $user_id = $current_user->ID;
     /* Check that the user hasn't already clicked to ignore the message */
-    if ( ! get_user_meta($user_id, 'smbw_theme_ignore_notice') ) {
+    if ( ! get_user_meta($user_id, 'smbw_plugin_ignore_notice') ) {
         echo '<div class="updated"><p>'; 
-        printf(__('<p>Thank you for downloading Social Media Badge Widget. We hope you enjoy using the plugin, maybe some of our <a href="http://stressfreesites.co.uk/development/?utm_source=backend&utm_medium=plugin&utm_campaign=wordpress" target="_blank">other plugins</a> would be of interest to you.</p><p>We have just launched a new Wordpress theme which might be of interest - <a href="http://www.mojo-themes.com/item/simple-setup/demo/" target="_blank">take a look</a>.</p><a href="%1$s">Hide This Notice</a>'), '?smbw_theme_nag_ignore=0');
+        printf(__('<p>Thank you for downloading Social Media Badge Widget, we hope you enjoy using the plugin.</p><p>If you like this plugin, you maybe interested in the <a href="http://socialprofilesandcontactdetailswordpressplugin.com/" target="_blank">premium version</a> to enable more features.</p><p>Otherwise, maybe try some of our other <a href="http://stressfreesites.co.uk/development/?utm_source=frontend&utm_medium=plugin&utm_campaign=wordpress" target="_blank">free plugins</a>.</p><a href="%1$s">Hide This Notice</a>'), '?smbw_plugin_nag_ignore=0');
         echo "</p></div>";
     }
 }
-add_action('admin_notices', 'smbw_theme_admin_notice');
+add_action('admin_notices', 'smbw_plugin_admin_notice');
 
-function smbw_theme_nag_ignore() {
+function smbw_plugin_nag_ignore() {
     global $current_user;
     $user_id = $current_user->ID;
     /* If user clicks to ignore the notice, add that to their user meta */
-    if ( isset($_GET['smbw_theme_nag_ignore']) && '0' == $_GET['smbw_theme_nag_ignore'] ) {
-         add_user_meta($user_id, 'smbw_theme_ignore_notice', 'true', true);
+    if ( isset($_GET['smbw_plugin_nag_ignore']) && '0' == $_GET['smbw_plugin_nag_ignore'] ) {
+         add_user_meta($user_id, 'smbw_plugin_ignore_notice', 'true', true);
     }
 }
-add_action('admin_init', 'smbw_theme_nag_ignore');
+add_action('admin_init', 'smbw_plugin_nag_ignore');
 
 /* Extending widget class to enable plugin */
 class Social_Media_Badge_Widget extends WP_Widget {
